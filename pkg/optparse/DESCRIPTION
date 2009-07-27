@@ -1,0 +1,11 @@
+Package: optparse
+Type: Package
+Title: Command line option parser.
+Version: 0.1
+Date: 2009-07-27
+Author: Trevor Davis, some documentation and unit tests ported from Allen Day's ``getopt`` package.
+Maintainer: Trevor Davis <Trevor.L.Davis@frb.gov>
+Description:  Goal is to create an R package of a command line parser inspired by Python's ``optparse`` libary.
+License: GPL
+LazyLoad: yes
+Depends: methods, getopt
