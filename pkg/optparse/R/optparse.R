@@ -60,15 +60,16 @@ setClass("OptionParserOption", representation(short_flag="character",
                                     help="character",
                                     metavar="character"),)
 
-if (!isGeneric("convert_to_getopt")) {
-    if (is.function("convert_to_getopt"))
-        fun <- convert_to_getopt
-    else fun <- function(object) standardGeneric("convert_to_getopt")
-    setGeneric("convert_to_getopt", fun)
-}
-
-
-setMethod("convert_to_getopt", "OptionParserOption", function(object) {
+# if (!isGeneric("convert_to_getopt")) {
+#     if (is.function("convert_to_getopt"))
+#         fun <- convert_to_getopt
+#     else fun <- function(object) standardGeneric("convert_to_getopt")
+#     setGeneric("convert_to_getopt", fun)
+# }
+# 
+# 
+# setMethod("convert_to_getopt", "OptionParserOption", function(object) {
+convert_to_getopt <- function(object) {
     short_flag <- sub("^-", "", object@short_flag)
     long_flag <- sub("^--", "", object@long_flag)
     if( object@action %in% c("store_true", "store_false") ) {
@@ -77,17 +78,18 @@ setMethod("convert_to_getopt", "OptionParserOption", function(object) {
         argument <- 1
     }
     return( c( long_flag, short_flag, argument, object@type, object@help) )
-})
-
-if (!isGeneric("add_option")) {
-    if(is.function("add_option"))
-        fun <- add_option
-    else fun <- function(object, ...) standardGeneric("add_option")
-    setGeneric("add_option", fun)
 }
+#)
 
-setMethod("add_option", "OptionParser", 
-        function(object, short_flag, long_flag, action="store", type=NULL, 
+# if (!isGeneric("add_option")) {
+#     if(is.function("add_option"))
+#         fun <- add_option
+#     else fun <- function(object, ...) standardGeneric("add_option")
+#     setGeneric("add_option", fun)
+# }
+# 
+# setMethod("add_option", "OptionParser", 
+add_option <- function(object, short_flag, long_flag, action="store", type=NULL, 
                     dest=NULL, default=NULL, help="", metavar=NULL) {
     options <- object@options
     n_original_options <- length(options)
@@ -96,17 +98,18 @@ setMethod("add_option", "OptionParser",
                                            default=default, help=help, metavar=metavar)        
     object@options <- options
     return(object)
-})
-
-if (!isGeneric("print_help")) {
-    if(is.function("print_help"))
-        fun <- print_help
-    else fun <- function(object) standardGeneric("print_help")
-    setGeneric("print_help", fun)
 }
+#)
 
-setMethod("print_help", "OptionParser", 
-        function(object) {
+# if (!isGeneric("print_help")) {
+#     if(is.function("print_help"))
+#         fun <- print_help
+#     else fun <- function(object) standardGeneric("print_help")
+#     setGeneric("print_help", fun)
+# }
+# 
+# setMethod("print_help", "OptionParser", 
+print_help <- function(object) {
     cat(object@usage, fill=TRUE)
     cat("\n")
     cat("options:", sep="\n")    
@@ -135,19 +138,21 @@ setMethod("print_help", "OptionParser",
         cat("\n\n")
     }
     return(invisible(NULL))
-})
-
-if (!isGeneric("parse_args")) {
-    if (is.function("parse_args")) {
-        fun <- parse_args
-    } else {
-        fun <- function(object, args, ...) standardGeneric("parse_args")
-    }
-    setGeneric("parse_args", fun)
 }
+#)
 
-
-setMethod("parse_args", "OptionParser", function(object, args = commandArgs(TRUE), print_help_and_exit = TRUE) {
+# if (!isGeneric("parse_args")) {
+#     if (is.function("parse_args")) {
+#         fun <- parse_args
+#     } else {
+#         fun <- function(object, args, ...) standardGeneric("parse_args")
+#     }
+#     setGeneric("parse_args", fun)
+# }
+# 
+# 
+# setMethod("parse_args", "OptionParser", function(object, args = commandArgs(TRUE), print_help_and_exit = TRUE) {
+parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = TRUE) {
     n_options <- length( object@options )
     spec <- matrix(NA, nrow = n_options, ncol = 5)
     for (ii in seq(along = object@options)) {
@@ -177,5 +182,6 @@ setMethod("parse_args", "OptionParser", function(object, args = commandArgs(TRUE
     }
         
     return(options)
-})
+}
+#)
 
