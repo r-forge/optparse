@@ -60,16 +60,16 @@ setClass("OptionParserOption", representation(short_flag="character",
                                     help="character",
                                     metavar="character"),)
 
-# if (!isGeneric("convert_to_getopt")) {
-#     if (is.function("convert_to_getopt"))
-#         fun <- convert_to_getopt
-#     else fun <- function(object) standardGeneric("convert_to_getopt")
-#     setGeneric("convert_to_getopt", fun)
+# if (!isGeneric(".convert_to_getopt")) {
+#     if (is.function(".convert_to_getopt"))
+#         fun <- .convert_to_getopt
+#     else fun <- function(object) standardGeneric(".convert_to_getopt")
+#     setGeneric(".convert_to_getopt", fun)
 # }
 # 
 # 
-# setMethod("convert_to_getopt", "OptionParserOption", function(object) {
-convert_to_getopt <- function(object) {
+# setMethod(".convert_to_getopt", "OptionParserOption", function(object) {
+.convert_to_getopt <- function(object) {
     short_flag <- sub("^-", "", object@short_flag)
     long_flag <- sub("^--", "", object@long_flag)
     if( object@action %in% c("store_true", "store_false") ) {
@@ -156,7 +156,7 @@ parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = T
     n_options <- length( object@options )
     spec <- matrix(NA, nrow = n_options, ncol = 5)
     for (ii in seq(along = object@options)) {
-        spec[ii, ] <- convert_to_getopt( object@options[[ii]] )
+        spec[ii, ] <- .convert_to_getopt( object@options[[ii]] )
     }
     opt <- getopt(spec=spec, opt=args)
 
