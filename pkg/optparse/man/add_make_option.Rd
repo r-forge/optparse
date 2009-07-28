@@ -26,7 +26,7 @@ add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL, 
       \dQuote{store_true} stores \code{TRUE} if the option is found and \dQuote{store_false} stores \code{FALSE} if the option is found.
   }
   \item{type}{A character string that describes specifies which data type should be stored, 
-      either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex}, or dQuote{character} 
+      either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex}, or \dQuote{character} 
   }
   \item{dest}{A character string that specifies what field in the returned list of \code{parse_args} 
         should \code{optparse} store option values. 
@@ -34,7 +34,8 @@ add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL, 
   \item{default}{
       The default value \code{optparse} should use if it does not find the option on the command line. 
   }
-  \item{help}{A character string describing the option.
+  \item{help}{
+      A character string describing the option.  \code{\%default} will be substituted by the the argument of \code{default}.
   }
   \item{metavar}{A character string that stands in for the option argument when printing help text. 
   }

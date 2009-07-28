@@ -20,6 +20,8 @@
   }
 }
 
+\author{ Trevor Davis}
+
 \seealso{
     \code{\linkS4class{OptionParser}} relies on this class, 
      use \code{make_option} and \code{add_option} to create an instance of this class.

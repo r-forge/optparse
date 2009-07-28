@@ -10,7 +10,7 @@
     is very useful for parsing options from the command line.
 }
 \usage{
-    OptionParser(usage = "usage: %prog [options]", option_list = list(), add_help_option = TRUE, prog = commandArgs()[1])
+    OptionParser(usage = "usage: \%prog [options]", option_list = list(), add_help_option = TRUE, prog = commandArgs()[1])
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,7 +37,6 @@
 \references{ Python's \code{optparse} library, which this package is inspired by,
     is described here:  \url{http://docs.python.org/library/optparse.html} }
     \author{ Trevor Davis }
-    }
 
 \seealso{
     \code{parse_args}
