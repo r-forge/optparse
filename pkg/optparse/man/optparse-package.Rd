@@ -56,7 +56,8 @@ Maintainer: Trevor Davis <Trevor.L.Davis@frb.gov>
     #!/path/to/Rscript
     # specify our desired options in a list
     # by default ``OptionParser`` will automatically add an help option equivalent to 
-    # ``make_option("-h", "--help", action="store_true", default=FALSE, help="Show this help message and exit")``
+    # ``make_option("-h", "--help", action="store_true", default=FALSE, 
+    #               help="Show this help message and exit")``
     option_list <- list( 
             make_option("-v", "--verbose", action="store_true", default=TRUE,
                 help="Print lots of output [default]"),

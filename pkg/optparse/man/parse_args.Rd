@@ -30,6 +30,6 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
 
 \seealso{
     \code{\linkS4class{OptionParser}}
-    \code{print_help}
-    \code{OptionParser}
+    \code{\link{print_help}}
+    \code{\link{OptionParser}}
 }

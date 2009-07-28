@@ -24,7 +24,7 @@
 
 \seealso{
     \code{\linkS4class{OptionParser}} relies on this class, 
-     use \code{make_option} and \code{add_option} to create an instance of this class.
+     use \code{\link{make_option}} and \code{\link{add_option}} to create an instance of this class.
 }
 \examples{
 showClass("OptionParserOption")

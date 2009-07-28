@@ -25,6 +25,6 @@ print_help(object)
 
 \seealso{
     \code{\linkS4class{OptionParser}}
-    \code{parse_args}
-    \code{OptionParser}
+    \code{{parse_args}}
+    \code{{OptionParser}}
 }

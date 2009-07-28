@@ -12,8 +12,10 @@ Functions to enable our OptionParser to recognize specific command line options.
     to create a new \code{OptionParser} instance.
 }
 \usage{
-make_option(short_flag, long_flag, action = "store", type = NULL, dest = NULL, default = NULL, help = "", metavar = NULL)
-add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL, default=NULL, help="", metavar=NULL) 
+    make_option(short_flag, long_flag, action = "store", type = NULL, dest = NULL, 
+                default = NULL, help = "", metavar = NULL)
+    add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL,
+               default=NULL, help="", metavar=NULL) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,8 +52,8 @@ add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL, 
 \seealso{
     \code{\linkS4class{OptionParser}}
     \code{\linkS4class{OptionParserOption}}
-    \code{parse_args}
-    \code{OptionParser}
+    \code{\link{parse_args}}
+    \code{\link{OptionParser}}
 }
 \examples{
 }

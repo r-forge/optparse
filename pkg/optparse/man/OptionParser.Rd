@@ -39,9 +39,9 @@
     \author{ Trevor Davis }
 
 \seealso{
-    \code{parse_args}
-    \code{make_option}
-    \code{add_option}
+    \code{\link{parse_args}}
+    \code{\link{make_option}}
+    \code{\link{add_option}}
     \code{\linkS4class{OptionParser}}
 }
 \examples{
