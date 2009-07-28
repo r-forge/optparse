@@ -88,12 +88,12 @@ if (!isGeneric("add_option")) {
 
 setMethod("add_option", "OptionParser", 
         function(object, short_flag, long_flag, action="store", type=NULL, 
-                    dest=NULL, default=NULL, help="") {
+                    dest=NULL, default=NULL, help="", metavar=NULL) {
     options <- object@options
     n_original_options <- length(options)
     options[[n_original_options + 1]] <- make_option(short_flag, long_flag, 
                                            action=action, type=type, dest=dest,
-                                           default=default, help=help)        
+                                           default=default, help=help, metavar=metavar)        
     object@options <- options
     return(object)
 })

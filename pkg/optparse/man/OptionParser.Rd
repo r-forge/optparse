@@ -1,78 +1,49 @@
 \name{OptionParser}
 \Rdversion{1.1}
 \alias{OptionParser}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+    A function to create an istance of the class OptionParser.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+    This function is used to create an instance of the class \code{OptionParser} which when combined 
+    with its \code{parse_args} method 
+    is very useful for parsing options from the command line.
 }
 \usage{
-OptionParser(usage = "usage: %prog [options]", option_list = list(), add_help_option = TRUE, prog = commandArgs()[1])
+    OptionParser(usage = "usage: %prog [options]", option_list = list(), add_help_option = TRUE, prog = commandArgs()[1])
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{usage}{
-%%     ~~Describe \code{usage} here~~
-}
-  \item{option_list}{
-%%     ~~Describe \code{option_list} here~~
-}
-  \item{add_help_option}{
-%%     ~~Describe \code{add_help_option} here~~
-}
-  \item{prog}{
-%%     ~~Describe \code{prog} here~~
-}
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+    \item{usage}{
+        The program usage message that will printed out if \code{parse_args} finds a help option, 
+            \code{\%prog} is substituted with the value of the \code{prog} argument.
+    }
+    \item{option_list}{
+        A list of of \code{OptionParserOption} instances that will define how \code{parse_args} reacts to command line options.
+            \code{OptionParserOption} instances are usually created by \code{make_option} and can also be added to an existing
+            \code{OptionParser} instance via the \code{add_option} function.
+    }
+    \item{add_help_option}{
+        Whether a standard help option should be automatically added to the \code{OptionParser} instance.
+    }
+    \item{prog}{
+        Program name to be substituted for \code{\%prog} in the usage message, the default is to use
+            the actual Rscript file name if called by an Rscript file.
+    }
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+    An istance of the \code{OptionParser} class.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\references{ Python's \code{optparse} library, which this package is inspired by,
+    is described here:  \url{http://docs.python.org/library/optparse.html} }
+    \author{ Trevor Davis }
+    }
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+    \code{parse_args}
+    \code{make_option}
+    \code{add_option}
+    \code{\linkS4class{OptionParser}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (usage = "usage: \%prog [options]", option_list = list(), 
-    add_help_option = TRUE, prog = commandArgs()[1]) 
-{
-    if (.Platform$OS.type == "windows") {
-        prog <- gsub("\\\\", "\\\\\\\\", prog)
-    }
-    usage <- sub("\%prog", prog, usage)
-    if (add_help_option) {
-        option_list[[length(option_list) + 1]] <- make_option("-h", 
-            "--help", action = "store_true", dest = "help", default = FALSE, 
-            help = "Show this help message and exit")
-    }
-    return(new("OptionParser", usage = usage, options = option_list))
-  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

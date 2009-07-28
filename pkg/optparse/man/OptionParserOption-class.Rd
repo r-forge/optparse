@@ -2,40 +2,27 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{OptionParserOption-class}
-\alias{convert_to_getopt,OptionParserOption-method}
 
-\title{Class "OptionParserOption" ~~~ }
-\description{	 ~~ A concise (1-5 lines) description of what the class is.  ~~}
-\section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("OptionParserOption", ...)}.
-	 ~~ describe objects here ~~ 
-}
+\title{Class "OptionParserOption"}
+\description{A class that defines how \code{optparse} should react to a given option it finds on the command line.}
 \section{Slots}{
 	 \describe{
-    \item{\code{short_flag}:}{Object of class \code{"character"} ~~ }
-    \item{\code{long_flag}:}{Object of class \code{"character"} ~~ }
-    \item{\code{action}:}{Object of class \code{"character"} ~~ }
-    \item{\code{type}:}{Object of class \code{"character"} ~~ }
-    \item{\code{dest}:}{Object of class \code{"character"} ~~ }
-    \item{\code{default}:}{Object of class \code{"ANY"} ~~ }
-    \item{\code{help}:}{Object of class \code{"character"} ~~ }
-    \item{\code{metavar}:}{Object of class \code{"character"} ~~ }
+    \item{\code{short_flag}:}{A string of the desired short flag comprised of the \dQuote{-} followed by a letter. }
+    \item{\code{long_flag}:}{A string of the desired long flag comprised of \dQuote{--} followed by a sequence of letters. }
+    \item{\code{action}:}{A character string that describes the action \code{optparse} should take when it encounters an option,
+                     either \dQuote{store}, \dQuote{store_true}, or \dQuote{store_false}. }
+    \item{\code{type}:}{A character string that describes specifies which data type should be stored, 
+                        either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex}, or dQuote{character} }
+    \item{\code{dest}:}{A character string that specifies which list field \code{optparse} will store option values. }
+    \item{\code{default}:}{ The default value \code{optparse} should use if it does not find the option on the command line. }
+    \item{\code{help}:}{A character string describing the option. }
+    \item{\code{metavar}:}{A character string that stands in for the option argument when printing help text. }
   }
 }
-\section{Methods}{
-  \describe{
-    \item{convert_to_getopt}{\code{signature(object = "OptionParserOption")}: ... }
-	 }
-}
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ }
-
- ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-	~~objects to See Also as \code{\link{~~fun~~}}, ~~~
-	or \code{\linkS4class{CLASSNAME}} for links to other classes
+    \code{\linkS4class{OptionParser}} relies on this class, 
+     use \code{make_option} and \code{add_option} to create an instance of this class.
 }
 \examples{
 showClass("OptionParserOption")
