@@ -11,7 +11,7 @@ cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
 setwd("Rscripts")
 command <- "Rscript example.R --help" # same as system("Rscript example.R -h")
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.R --help" # rely only on defaults
+command <- "Rscript example.R" # rely only on defaults
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 command <- "Rscript example.R --mean=10 --count=10" 
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
