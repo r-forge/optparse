@@ -17,7 +17,9 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
     if( .Platform$OS.type == "windows") {
         prog <- gsub("\\\\", "\\\\\\\\", prog)
     }
-    usage <- sub("%prog", prog, usage)
+    if(length(prog)) {
+        usage <- sub("%prog", prog, usage)
+    }
 
     if(add_help_option) {
         option_list[[length(option_list) + 1]] <- 
