@@ -13,9 +13,9 @@ command <- "Rscript example.R --help" # same as system("Rscript example.R -h")
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 command <- "Rscript example.R" # rely only on defaults
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.R --mean=10 --count=10" 
+command <- "Rscript example.R --mean=10 --count=7" 
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.R -m 10 -c 10" #  since we set a seed this is the same as previous comman
+command <- "Rscript example.R -m 10 -c 7 -q" #  same as above but "quiet"
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 @
 
