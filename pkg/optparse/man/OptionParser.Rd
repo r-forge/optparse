@@ -10,7 +10,7 @@
     is very useful for parsing options from the command line.
 }
 \usage{
-    OptionParser(usage = "usage: \%prog [options]", option_list = list(), add_help_option = TRUE, prog = commandArgs()[1])
+    OptionParser(usage = "usage: \%prog [options]", option_list = list(), add_help_option = TRUE, prog = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
