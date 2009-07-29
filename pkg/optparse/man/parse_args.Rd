@@ -15,7 +15,8 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
     An \code{OptionParser} instance.
 }
   \item{args}{
-    A character string containing command line options to be parsed.
+    A character string containing command line options to be parsed.  
+    Default is everything after the Rscript program in the command line. 
 }
   \item{print_help_and_exit}{
     Whether \code{parse_args} should call \code{print_help} to print out a usage message and exit the program.  Default is \code{TRUE}.
