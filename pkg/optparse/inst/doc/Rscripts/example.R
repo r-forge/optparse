@@ -10,8 +10,9 @@ option_list <- list(
             help="Print lots of output [default]"),
         make_option("-q", "--quietly", action="store_false", 
             dest="verbose", help="Print little output"),
-        make_option("-c", "--count", action="store", type="integer", default=10, 
-            help="Number of random normals to generate [default %default]"),
+        make_option("-c", "--count", action="store", type="integer", default=5, 
+            help="Number of random normals to generate [default %default]",
+            metavar="number"),
         make_option("-m", "--mean", action="store", type="numeric", default=0,
             help="Mean of random normals [default %default]"),
         make_option("-d", "--sd", action="store", type="numeric", default=1,
@@ -20,14 +21,16 @@ option_list <- list(
             help="The seed for the random number generator random normals [default %default]")
         )
                                         
-# get command line options, if not found set to specified defaults, 
-# and if help option encountered print help and exit
-opt <- parse_args(OptionParser(option_list))
+# get command line options, if help option encountered print help and exit,
+# otherwise if options not found on command line then set it to pre-specified defaults, 
+opt <- parse_args(OptionParser(option_list=option_list))
 
 # print some progress messages to stderr if "quietly" wasn't requested
-if ( opt$verbose ) { write("writing verbose output...", stderr()) }
+if ( opt$verbose ) { write("writing some verbose output...", stderr()) }
 
 # do some operations based on user input
 set.seed(opt$seed)
 cat(paste(rnorm(opt$count, mean=opt$mean, sd=opt$sd), collapse="\n"))
 cat("\n")
+
+# Note:  This example is a port of an example in Allen Day's getopt package
