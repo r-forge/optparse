@@ -19,9 +19,15 @@ print_help(object)
 \value{
     \code{print_help} uses the \code{cat} function to print out a usage message.  It returns \code{invisible(NULL)}.
 }
-\references{ Python's \code{optparse} library, which this package is inspired by,
-   is described here:  \url{http://docs.python.org/library/optparse.html} }
-\author{ Trevor Davis }
+\references{ Python's \code{optparse} library, which this package is based on,
+    is described here:  \url{http://docs.python.org/library/optparse.html} 
+}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\linkS4class{OptionParser}}

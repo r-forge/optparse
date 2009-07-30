@@ -20,7 +20,12 @@
   }
 }
 
-\author{ Trevor Davis}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\linkS4class{OptionParser}} relies on this class, 

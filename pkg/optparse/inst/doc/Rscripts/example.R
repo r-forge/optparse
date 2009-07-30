@@ -1,4 +1,6 @@
 #!/usr/bin/env Rscript
+# Note:  This example is a port of an example in the getopt package
+#        which is Copyright 2008 Allen Day
 suppressPackageStartupMessages(library("optparse"))
 
 # specify our desired options in a list
@@ -16,9 +18,7 @@ option_list <- list(
     make_option("-m", "--mean", action="store", type="numeric", default=0,
         help="Mean of random normals [default %default]"),
     make_option("-d", "--sd", action="store", type="numeric", default=1,
-        help="Standard deviation of random normals [default %default]"),
-    make_option("-s", "--seed", action="store", type="numeric", default=11,
-        help="The seed for the random number generator random normals [default %default]")
+        help="Standard deviation of random normals [default %default]")
     )
                                         
 # get command line options, if help option encountered print help and exit,
@@ -26,11 +26,10 @@ option_list <- list(
 opt <- parse_args(OptionParser(option_list=option_list))
 
 # print some progress messages to stderr if "quietly" wasn't requested
-if ( opt$verbose ) { write("writing some verbose output to standard error...\n", stderr()) }
+if ( opt$verbose ) { 
+    write("writing some verbose output to standard error...\n\n", stderr()) 
+}
 
 # do some operations based on user input
-set.seed(opt$seed)
 cat(paste(rnorm(opt$count, mean=opt$mean, sd=opt$sd), collapse="\n"))
 cat("\n")
-
-# Note:  This example is a port of an example in Allen Day's getopt package

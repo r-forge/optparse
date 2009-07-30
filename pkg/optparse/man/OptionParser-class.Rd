@@ -11,7 +11,12 @@
     \item{\code{options}:}{ A list of \code{OptionParserOption} instances. }
   }
 }
-\author{ Trevor Davis}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\link{OptionParser}}

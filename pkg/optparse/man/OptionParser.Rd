@@ -28,15 +28,21 @@
     }
     \item{prog}{
         Program name to be substituted for \code{\%prog} in the usage message, the default is to use
-            the actual Rscript file name if called by an Rscript file.
+            the actual Rscript file name if called by an Rscript file and otherwise keep \code{\%prog}.
     }
 }
 \value{
     An istance of the \code{OptionParser} class.
 }
-\references{ Python's \code{optparse} library, which this package is inspired by,
-    is described here:  \url{http://docs.python.org/library/optparse.html} }
-    \author{ Trevor Davis }
+\references{ Python's \code{optparse} library, which this package is based on,
+    is described here:  \url{http://docs.python.org/library/optparse.html} 
+}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\link{parse_args}}

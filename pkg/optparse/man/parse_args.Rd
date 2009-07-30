@@ -25,9 +25,15 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
 \value{
     Returns a list containing option values.
 }
-\references{ Python's \code{optparse} library, which this package is inspired by,
-   is described here:  \url{http://docs.python.org/library/optparse.html} }
-\author{ Trevor Davis }
+\references{ Python's \code{optparse} library, which this package is based on,
+    is described here:  \url{http://docs.python.org/library/optparse.html} 
+}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\linkS4class{OptionParser}}

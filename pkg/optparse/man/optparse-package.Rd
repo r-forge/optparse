@@ -39,13 +39,16 @@ argument, it is the subsequent option. short flags may be bundled together, shar
 \dQuote{"-"}, but only the final short flag is able to have a corresponding argument.
 %%%
 }
-\author{
-Trevor Davis with documentation and unit tests ported from Allen Day's getopt package.
-
-Maintainer: Trevor Davis <Trevor.L.Davis@frb.gov>
+\references{ Python's \code{optparse} library, which this package is based on,
+    is described here:  \url{http://docs.python.org/library/optparse.html} 
 }
-\references{
-    Python's optparse library (\url{http://docs.python.org/library/optparse.html}).
+\author{ 
+    Trevor Davis. 
+
+    Some documentation and unit tests ported from Allen Day's getopt package.
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
 }
 \keyword{ package }
 \seealso{

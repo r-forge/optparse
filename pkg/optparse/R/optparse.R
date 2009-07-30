@@ -1,3 +1,6 @@
+#   The documentation for Python's optparse library, which this package 
+#   is based on, is Copyright 1990-2009, Python Software Foundation.
+
 setClass("OptionParser", representation(usage = "character", options = "list"))
 
 # setMethod("initialize", "OptionParser", function(.Object) {

@@ -1,9 +1,6 @@
 %\VignetteIndexEntry{optparse Command Line Option Parsing}
 \documentclass[a4paper]{article}
 \title{optparse Command Line Option Parsing}
-\author{Trevor Davis \\
-        Documentation ported from Allen Day's getopt package
-}
 \begin{document}
 \maketitle
 <<>>=

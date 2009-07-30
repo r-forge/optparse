@@ -45,9 +45,15 @@ Functions to enable our OptionParser to recognize specific command line options.
 \value{
     Both \code{make_option} and \code{add_option} return instances of class \code{OptionParserOption}.
 }
-\references{ Python's \code{optparse} library, which this package is inspired by,
-   is described here:  \url{http://docs.python.org/library/optparse.html} }
-\author{ Trevor Davis }
+\references{ Python's \code{optparse} library, which this package is based on,
+    is described here:  \url{http://docs.python.org/library/optparse.html} 
+}
+\author{ 
+    Trevor Davis. 
+
+    The documentation for Python's optparse library, which this package 
+    is based on, is Copyright 1990-2009, Python Software Foundation.
+}
 
 \seealso{
     \code{\linkS4class{OptionParser}}
