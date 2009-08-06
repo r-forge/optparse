@@ -59,18 +59,18 @@ argument, it is the subsequent option. short flags may be bundled together, shar
     #!/path/to/Rscript
     # specify our desired options in a list
     # by default ``OptionParser`` will automatically add an help option equivalent to 
-    # ``make_option("-h", "--help", action="store_true", default=FALSE, 
+    # ``make_option(c("-h", "--help"), action="store_true", default=FALSE, 
     #               help="Show this help message and exit")``
     option_list <- list( 
-            make_option("-v", "--verbose", action="store_true", default=TRUE,
+            make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
                 help="Print lots of output [default]"),
-            make_option("-q", "--quietly", action="store_false", 
+            make_option(c("-q", "--quietly"), action="store_false", 
                 dest="verbose", help="Print little output"),
-            make_option("-c", "--count", action="store", type="integer", default=10, 
+            make_option(c("-c", "--count"), action="store", type="integer", default=10, 
                 help="Number of random normals to generate [default \%default]"),
-            make_option("-m", "--mean", action="store", type="numeric", default=0,
+            make_option(c("-m", "--mean"), action="store", type="numeric", default=0,
                 help="Mean of random normals [default \%default]"),
-            make_option("-s", "--sd", action="store", type="numeric", default=1,
+            make_option(c("-s", "--sd"), action="store", type="numeric", default=1,
                 help="Standard deviation of random normals [default \%default]")
             )
                                             
@@ -90,9 +90,9 @@ argument, it is the subsequent option. short flags may be bundled together, shar
 if (require("RUnit")) {
 
 
-    parser <- OptionParser( option_list = list( make_option("-q", "--quietly", action="store_false", dest="verbose"),
-                                        make_option("-v", "--verbose", action="store_true", dest="verbose", default=TRUE),
-                                        make_option("-f", "--filename", action="store", metavar="file")))
+    parser <- OptionParser( option_list = list( make_option(c("-q", "--quietly"), action="store_false", dest="verbose"),
+                                        make_option("--verbose", action="store_true", dest="verbose", default=TRUE),
+                                        make_option(c("-f", "--filename"), action="store", metavar="file")))
                                     
     # verbose should be false
     checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))

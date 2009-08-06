@@ -12,16 +12,15 @@ Functions to enable our OptionParser to recognize specific command line options.
     to create a new \code{OptionParser} instance.
 }
 \usage{
-    make_option(short_flag, long_flag, action = "store", type = NULL, dest = NULL, 
+    make_option(opt_str, action = "store", type = NULL, dest = NULL, 
                 default = NULL, help = "", metavar = NULL)
-    add_option(object, short_flag, long_flag, action="store", type=NULL, dest=NULL,
+    add_option(object, opt_str, action="store", type=NULL, dest=NULL,
                default=NULL, help="", metavar=NULL) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{An instance of the \code{OptionParser} class}
-  \item{short_flag}{A string of the desired short flag comprised of the \dQuote{-} followed by a letter.}
-  \item{long_flag}{A string of the desired long flag comprised of \dQuote{--} followed by a sequence of letters. }
+  \item{opt_str}{A character vector containing the string of the desired long flag comprised of \dQuote{--} followed by a letter and then a sequence of alphanumeric characters and optionally a string of the desired short flag comprised of the \dQuote{-} followed by a letter.}
   \item{action}{A character string that describes the action \code{optparse} should take when it encounters an option,
       either \dQuote{store}, \dQuote{store_true}, or \dQuote{store_false}.  The default is \dQuote{store} which signifies 
       that \code{optparse} should store the specified following value if the option is found on the command string.

@@ -26,7 +26,7 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
 
     if(add_help_option) {
         option_list[[length(option_list) + 1]] <- 
-            make_option("-h", "--help",
+            make_option(c("-h", "--help"),
                 action="store_true", dest="help", default=FALSE,
                 help="Show this help message and exit")
     }
@@ -34,16 +34,13 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
     return(new("OptionParser", usage=usage, options=option_list))
 }
 
-make_option <- function(short_flag, long_flag, action="store", type=NULL,
+make_option <- function(opt_str, action="store", type=NULL,
                      dest=NULL, default=NULL, help="", metavar=NULL) {
-    if(grepl("^-", short_flag)) { } else {
-        # short_flag <- sub("^", "-", short_flag)
-        stop("short_flag should be a '-' followed by a single alphabetic character")
-    }
-    if(grepl("^--", long_flag)) { } else {
-        # long_flag <- sub("^", "--", long_flag)
-        stop("long_flag should be a '--' followed by a sequence of alphanumeric characters starting with a letter")
-    }
+    short_flag <- opt_str[grepl("^-[[:alpha:]]", opt_str)]
+    if(length(short_flag)) {} else { short_flag <- as.character(NA) }
+    long_flag <- opt_str[grepl("^--[[:alpha:]]", opt_str)]
+    if(length(long_flag)) {} else {"We require a long flag option"}
+
     if(is.null(type)) {
         if( action %in% c("store_true", "store_false") ) {
             type <- "logical"
@@ -106,11 +103,11 @@ setClass("OptionParserOption", representation(short_flag="character",
 # }
 # 
 # setMethod("add_option", "OptionParser", 
-add_option <- function(object, short_flag, long_flag, action="store", type=NULL, 
+add_option <- function(object, opt_str, action="store", type=NULL, 
                     dest=NULL, default=NULL, help="", metavar=NULL) {
     options <- object@options
     n_original_options <- length(options)
-    options[[n_original_options + 1]] <- make_option(short_flag, long_flag, 
+    options[[n_original_options + 1]] <- make_option(opt_str=opt_str,
                                            action=action, type=type, dest=dest,
                                            default=default, help=help, metavar=metavar)        
     object@options <- options

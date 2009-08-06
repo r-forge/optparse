@@ -8,16 +8,16 @@ suppressPackageStartupMessages(library("optparse"))
 # ``make_option("-h", "--help", action="store_true", default=FALSE, 
 #               help="Show this help message and exit")``
 option_list <- list( 
-    make_option("-v", "--verbose", action="store_true", default=TRUE,
+    make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
         help="Print extra output [default]"),
-    make_option("-q", "--quietly", action="store_false", 
+    make_option(c("-q", "--quietly"), action="store_false", 
         dest="verbose", help="Print little output"),
-    make_option("-c", "--count", action="store", type="integer", default=5, 
+    make_option(c("-c", "--count"), action="store", type="integer", default=5, 
         help="Number of random normals to generate [default %default]",
         metavar="integer"),
-    make_option("-m", "--mean", action="store", type="numeric", default=0,
+    make_option("--mean", action="store", type="numeric", default=0,
         help="Mean of random normals [default %default]"),
-    make_option("-d", "--sd", action="store", type="numeric", default=1,
+    make_option("--sd", action="store", type="numeric", default=1,
         help="Standard deviation of random normals [default %default]")
     )
                                         
