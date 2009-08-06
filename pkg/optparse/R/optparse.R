@@ -36,8 +36,14 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
 
 make_option <- function(short_flag, long_flag, action="store", type=NULL,
                      dest=NULL, default=NULL, help="", metavar=NULL) {
-    if(grepl("^-", short_flag)) {} else {short_flag <- sub("^", "-", short_flag)}
-    if(grepl("^--", long_flag)) {} else {long_flag <- sub("^", "--", long_flag)}
+    if(grepl("^-", short_flag)) { } else {
+        # short_flag <- sub("^", "-", short_flag)
+        stop("short_flag should be a '-' followed by a single alphabetic character")
+    }
+    if(grepl("^--", long_flag)) { } else {
+        # long_flag <- sub("^", "--", long_flag)
+        stop("long_flag should be a '--' followed by a sequence of alphanumeric characters starting with a letter")
+    }
     if(is.null(type)) {
         if( action %in% c("store_true", "store_false") ) {
             type <- "logical"
@@ -129,7 +135,7 @@ print_help <- function(object) {
     for(ii in seq(along=options)) {
         option <- options[[ii]]
         cat("\t")
-        if(!is.null(option@short_flag)) {
+        if(!is.na(option@short_flag)) {
             cat(option@short_flag)
             if( option@action == "store" ) {
                 cat(" ", toupper(option@metavar), sep="")
