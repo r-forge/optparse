@@ -179,7 +179,7 @@ parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = T
         option <- object@options[[ii]]
         option_value <- opt[[sub("^--", "", option@long_flag)]] 
         if( !is.null(option_value) ) {
-            if ( option_value & (option@action == "store_false") ) {
+            if ( option@action == "store_false" ) {
                 options[[option@dest]] <- FALSE
             } else {    
                 options[[option@dest]] <- option_value

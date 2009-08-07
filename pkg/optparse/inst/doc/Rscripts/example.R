@@ -5,7 +5,7 @@ suppressPackageStartupMessages(library("optparse"))
 
 # specify our desired options in a list
 # by default ``OptionParser`` will automatically add an help option equivalent to 
-# ``make_option("-h", "--help", action="store_true", default=FALSE, 
+# ``make_option(c("-h", "--help"), action="store_true", default=FALSE, 
 #               help="Show this help message and exit")``
 option_list <- list( 
     make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
@@ -14,11 +14,12 @@ option_list <- list(
         dest="verbose", help="Print little output"),
     make_option(c("-c", "--count"), action="store", type="integer", default=5, 
         help="Number of random normals to generate [default %default]",
-        metavar="integer"),
+        metavar="number"),
     make_option("--mean", action="store", type="numeric", default=0,
         help="Mean of random normals [default %default]"),
     make_option("--sd", action="store", type="numeric", default=1,
-        help="Standard deviation of random normals [default %default]")
+        help="Standard deviation of random normals [default %default]",
+        metavar="standard_deviation")
     )
                                         
 # get command line options, if help option encountered print help and exit,
