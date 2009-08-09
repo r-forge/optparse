@@ -1,18 +1,41 @@
 %\VignetteIndexEntry{optparse Command Line Option Parsing}
 \documentclass[a4paper]{article}
+\usepackage{listings}
 \title{optparse Command Line Option Parsing}
 \begin{document}
 \maketitle
-<<>>=
-cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
+optparse is a command line option parser inspired by Python's "optparse" library intended to be used with Rscript "\#!" scripts.
+\newpage
+Here is an example R script illustrating the use of the optparse package.
+\lstinputlisting{Rscripts/example.R}
+\newpage
+<<echo=FALSE>>=
+#cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
+command <- "cd Rscripts" # 
+system(command)
 setwd("Rscripts")
+@
+\tt{\Sexpr{command}}
+<<echo=FALSE>>=
 command <- "Rscript example.R --help" # same as system("Rscript example.R -h")
+@
+\tt{\Sexpr{command}}
+<<echo=FALSE>>=
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 command <- "Rscript example.R" # rely only on defaults
+@
+\tt{\Sexpr{command}}
+<<echo=FALSE>>=
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 command <- "Rscript example.R --mean=10 --count=7" 
+@
+\tt{\Sexpr{command}}
+<<echo=FALSE>>=
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 command <- "Rscript example.R -m 10 -c 7 -q" #  same as above but "quiet"
+@
+\tt{\Sexpr{command}}
+<<echo=FALSE>>=
 cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
 @
 
