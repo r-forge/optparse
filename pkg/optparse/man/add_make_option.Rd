@@ -27,18 +27,24 @@ Functions to enable our OptionParser to recognize specific command line options.
       \dQuote{store_true} stores \code{TRUE} if the option is found and \dQuote{store_false} stores \code{FALSE} if the option is found.
   }
   \item{type}{A character string that describes specifies which data type should be stored, 
-      either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex}, or \dQuote{character} 
+      either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex}, or \dQuote{character}.
+      Default is \dQuote{logical} if \code{action \%in\% c("store_true", store_false)}, 
+      \code{typeof(default)} if \code{action == "store"} and default is not \code{NULL} and
+      \dQuote{character} if \code{action == "store"} and default is \code{NULL}.
   }
-  \item{dest}{A character string that specifies what field in the returned list of \code{parse_args} 
-        should \code{optparse} store option values. 
+  \item{dest}{A character string that specifies what field in the list returned by \code{parse_args} 
+        should \code{optparse} store option values.  Default is derived from the long flag in \code{opt_str}.
   }
   \item{default}{
-      The default value \code{optparse} should use if it does not find the option on the command line. 
+      The default value \code{optparse} should use if it does not find the option on the command line.  
+      Default is derived from the long flag in \code{opt_str}.
   }
   \item{help}{
-      A character string describing the option.  \code{\%default} will be substituted by the the argument of \code{default}.
+      A character string describing the option to be used by \code{print_help} in generating a usage message.
+      \code{\%default} will be substituted by the the value of \code{default}.
   }
-  \item{metavar}{A character string that stands in for the option argument when printing help text. 
+  \item{metavar}{A character string that stands in for the option argument when printing help text.
+     Default is the value of \code{dest}.
   }
 }
 \value{

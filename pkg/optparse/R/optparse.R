@@ -61,7 +61,7 @@ make_option <- function(opt_str, action="store", type=NULL,
     if(is.null(dest)) { dest <- sub("^--", "", long_flag) }
     if(is.null(metavar)) {
         if(action == "store") { 
-            metavar <- dest
+            metavar <- sub("^--", "", long_flag)
         } else {
             metavar <- character(0)
         }
