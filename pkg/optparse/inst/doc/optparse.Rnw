@@ -4,10 +4,11 @@
 \title{optparse Command Line Option Parsing}
 \begin{document}
 \maketitle
-optparse is a command line option parser inspired by Python's "optparse" library intended to be used with Rscript "\#!" scripts.
+\setlength{\hoffset}{-0.5in}
+optparse is a command line option parser inspired by Python's "optparse" library.  Use this with Rscript to write "\#!"-shebang scripts that accept short and long flags/options, generate a usage statement, and set default values for options that are not specified on the command line.
 \newpage
 Here is an example R script illustrating the use of the optparse package.
-\lstinputlisting{Rscripts/example.R}
+\lstinputlisting[language=R]{Rscripts/example.R}
 \newpage
 <<echo=FALSE>>=
 #cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
@@ -24,7 +25,7 @@ To avoid having to worry about correctly specifying our \verb|"#!"|-shebang line
 command <- "Rscript example.R --help" # same as system("Rscript example.R -h")
 @
 
-By default \emph{optparse} will generate a help message if it encounters \verb|--help| or \verb|-h| on the command line.  Note how \verb|%default| in the example program was replaced by the actual default values by \emph{optparse}.  
+By default \emph{optparse} will generate a help message if it encounters \verb|--help| or \verb|-h| on the command line.  Note how \verb|%default| in the example program was replaced by the actual default values in the help statement that \emph{optparse} generated.  
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
