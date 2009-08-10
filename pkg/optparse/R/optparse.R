@@ -47,7 +47,11 @@ make_option <- function(opt_str, action="store", type=NULL,
         }
         else {
             if( action %in% c("store") ) {
-                type <- "character"
+                if (is.null(default)) {
+                    type <- "character"
+                } else {
+                    type <- typeof(default)
+                }
             }
         }
     }
