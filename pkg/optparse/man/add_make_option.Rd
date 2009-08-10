@@ -61,4 +61,17 @@ Functions to enable our OptionParser to recognize specific command line options.
     \code{\link{OptionParser}}
 }
 \examples{
+    make_option("--longflag")
+    make_option(c("-l", "--longflag"))
+    make_option("--integer", type="integer", default=5)
+    make_option("--integer", default=as.integer(5))  # same as previous
+\testonly{
+    if (require("RUnit")) {
+        checkEquals(make_option("--integer", type="integer", default=5),
+                    make_option("--integer", default=as.integer(5)))
+        checkEquals(make_option("--logical", type="logical", default="TRUE"),
+                    make_option("--logical", default=TRUE))
+        checkException(make_option("badflag"))
+    }
+}
 }
