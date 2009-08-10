@@ -55,6 +55,9 @@ make_option <- function(opt_str, action="store", type=NULL,
             }
         }
     }
+    if((type != typeof(default)) & !is.null(default)) {
+        storage.mode(default) <- type
+    }
     if(is.null(dest)) { dest <- sub("^--", "", long_flag) }
     if(is.null(metavar)) {
         if(action == "store") { 
