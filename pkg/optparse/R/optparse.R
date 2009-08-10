@@ -39,7 +39,7 @@ make_option <- function(opt_str, action="store", type=NULL,
     short_flag <- opt_str[grepl("^-[[:alpha:]]", opt_str)]
     if(length(short_flag)) {} else { short_flag <- as.character(NA) }
     long_flag <- opt_str[grepl("^--[[:alpha:]]", opt_str)]
-    if(length(long_flag)) {} else {"We require a long flag option"}
+    if(length(long_flag)) {} else {stop("We require a long flag option")}
 
     if(is.null(type)) {
         if( action %in% c("store_true", "store_false") ) {
