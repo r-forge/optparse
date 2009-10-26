@@ -13,11 +13,11 @@ Goal is to create an R package of a command line parser inspired by Python's \dQ
 \tabular{ll}{
 Package: \tab optparse\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2009-07-27\cr
+Version: \tab 0.8\cr
+Date: \tab 2009-10-27\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
-Depends: \tab methods, getopt\cr
+Depends: \tab R (>= 2.9.0), methods\cr
 }
 %%% Ported from Allen Day's getopt package
 \code{optparse} is primarily intended to be used with \dQuote{Rscript}. It facilitates writing \dQuote{#!} shebang scripts
