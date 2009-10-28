@@ -24,9 +24,9 @@ Depends: \tab R (>= 2.9.0), methods\cr
 that accept short and long flags/options. It can also be used from \R directly, but is probably less
 useful in this context.
 
-Each value of the list is coerced to the data type specified
-according to the value of the spec argument. See below for details.
-Notes on naming convention:
+See package vignette for a more detailed example.
+
+Notes on naming convention in package:
 1. An option is one of the shell-split input strings.
 2. A flag is a type of option. a flag can be defined as having no argument (defined below), a required
 argument, or an optional argument.
@@ -55,49 +55,49 @@ argument, it is the subsequent option. short flags may be bundled together, shar
  \code{\link[getopt:getopt-package]{getopt}} 
 }
 \examples{
-\dontrun{
-    #!/path/to/Rscript
-    # specify our desired options in a list
-    # by default ``OptionParser`` will automatically add an help option equivalent to 
-    # ``make_option(c("-h", "--help"), action="store_true", default=FALSE, 
-    #               help="Show this help message and exit")``
-    option_list <- list( 
-            make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
-                help="Print lots of output [default]"),
-            make_option(c("-q", "--quietly"), action="store_false", 
-                dest="verbose", help="Print little output"),
-            make_option(c("-c", "--count"), action="store", type="integer", default=10, 
-                help="Number of random normals to generate [default \%default]"),
-            make_option(c("-m", "--mean"), action="store", type="numeric", default=0,
-                help="Mean of random normals [default \%default]"),
-            make_option(c("-s", "--sd"), action="store", type="numeric", default=1,
-                help="Standard deviation of random normals [default \%default]")
-            )
+    \dontrun{
+        #!/path/to/Rscript
+        # specify our desired options in a list
+        # by default ``OptionParser`` will automatically add an help option equivalent to 
+        # ``make_option(c("-h", "--help"), action="store_true", default=FALSE, 
+        #               help="Show this help message and exit")``
+        option_list <- list( 
+                make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
+                    help="Print lots of output [default]"),
+                make_option(c("-q", "--quietly"), action="store_false", 
+                    dest="verbose", help="Print little output"),
+                make_option(c("-c", "--count"), action="store", type="integer", default=10, 
+                    help="Number of random normals to generate [default \%default]"),
+                make_option(c("-m", "--mean"), action="store", type="numeric", default=0,
+                    help="Mean of random normals [default \%default]"),
+                make_option(c("-s", "--sd"), action="store", type="numeric", default=1,
+                    help="Standard deviation of random normals [default \%default]")
+                )
+                                                
+        # get command line options, if not found set to specified defaults, 
+        # and if help option encountered print help and exit
+        opt <- parse_args(OptionParser(option_list))
+
+        # print some progress messages to stderr if "quietly" wasn't requested
+        if ( opt$verbose ) { write("writing...", stderr()) }
+
+        # do some operations based on user input
+        cat(paste(rnorm(opt$count, mean=opt$mean, sd=opt$sd), collapse="\n"))
+        cat("\n")
+    }
+
+    \testonly{
+        if (require("RUnit")) {
+
+
+            parser <- OptionParser( option_list = list( make_option(c("-q", "--quietly"), action="store_false", dest="verbose"),
+                                                make_option("--verbose", action="store_true", dest="verbose", default=TRUE),
+                                                make_option(c("-f", "--filename"), action="store", metavar="file")))
                                             
-    # get command line options, if not found set to specified defaults, 
-    # and if help option encountered print help and exit
-    opt <- parse_args(OptionParser(option_list))
-
-    # print some progress messages to stderr if "quietly" wasn't requested
-    if ( opt$verbose ) { write("writing...", stderr()) }
-
-    # do some operations based on user input
-    cat(paste(rnorm(opt$count, mean=opt$mean, sd=opt$sd), collapse="\n"))
-    cat("\n")
-}
-
-\testonly{
-if (require("RUnit")) {
-
-
-    parser <- OptionParser( option_list = list( make_option(c("-q", "--quietly"), action="store_false", dest="verbose"),
-                                        make_option("--verbose", action="store_true", dest="verbose", default=TRUE),
-                                        make_option(c("-f", "--filename"), action="store", metavar="file")))
-                                    
-    # verbose should be false
-    checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))
-    checkException(checkEquals(parse_args(parser, "-q"), list(verbose = TRUE, help = FALSE)))
-    print_help(parser)
-}
-}
+            # verbose should be false
+            checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))
+            checkException(checkEquals(parse_args(parser, "-q"), list(verbose = TRUE, help = FALSE)))
+            print_help(parser)
+        }
+    }
 }
