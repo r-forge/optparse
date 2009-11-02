@@ -52,7 +52,7 @@ argument, it is the subsequent option. short flags may be bundled together, shar
 }
 \keyword{ package }
 \seealso{
- \code{\link[getopt:getopt-package]{getopt}} 
+ \code{\link[getopt]{getopt}} 
 }
 \examples{
     \dontrun{
