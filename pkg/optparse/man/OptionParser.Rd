@@ -50,5 +50,3 @@
     \code{\link{add_option}}
     \code{\linkS4class{OptionParser}}
 }
-\examples{
-}
