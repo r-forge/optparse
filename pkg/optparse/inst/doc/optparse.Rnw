@@ -5,40 +5,60 @@
 \begin{document}
 \maketitle
 \setlength{\hoffset}{-0.5in}
-optparse is a command line option parser inspired by Python's "optparse" library.  Use this with Rscript to write "\#!"-shebang scripts that accept short and long flags/options, generate a usage statement, and set default values for options that are not specified on the command line.
-\newpage
-Here is an example R script illustrating the use of the optparse package.
-\lstinputlisting[language=R]{example.Rscript}
-\newpage
+optparse is a command line option parser inspired by Python's ``optparse'' library.  Use this with Rscript to write ``\#!''-shebang scripts that accept short and long flags/options, generate a usage statement, and set default values for options that are not specified on the command line.
+
+%\lstinputlisting[language=R]{example.Rscript}
+%\newpage
 <<echo=FALSE>>=
+Rscript_executable <- file.path(R.home(), "bin", "Rscript")
+list_file_command <- "ls"
+show_file_command <- "cat example.Rscript"
+chmod_command <- "chmod u+g example.Rscript"
 #cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
 #command <- "cd ../Rscripts" # 
 #system(command)
 #setwd("../Rscripts")
 @
 
-To avoid having to worry about correctly specifying our \verb|"#!"|-shebang line and making our program executable we will change to the directory of our example program and use \verb|Rscript| directly.
+In our working directory we have an example R script, named ``example.Rscript'' illustrating the use of the optparse package.
 \newline\newline
-%\noindent\verb|\Sexpr{#paste("bash$", command)}|
-\newline
+\noindent\verb|\Sexpr{paste("bash$", list_file_command)}|
 <<echo=FALSE>>=
-command <- "Rscript example.Rscript --help" # same as system("Rscript example.Rscript -h")
+cat(system(sprintf("%s", list_file_command), intern=TRUE), sep="\n")
+@
+
+\newpage
+
+Here is what ``example.Rscript'' contains:
+\newline\newline
+\noindent\verb|\Sexpr{paste("bash$", show_file_command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s", show_file_command), intern=TRUE), sep="\n")
+@
+
+In order for a *nix system to recognize the ``\#!''-shebang line you need to mark the file executable with the ``chmod'' command:
+\newline\newline
+\noindent\verb|\Sexpr{paste("bash$", chmod_command)}|
+
+\newpage
+<<echo=FALSE>>=
+command <- "example.Rscript --help" # same as system("Rscript example.Rscript -h")
 @
 
 By default \emph{optparse} will generate a help message if it encounters \verb|--help| or \verb|-h| on the command line.  Note how \verb|%default| in the example program was replaced by the actual default values in the help statement that \emph{optparse} generated.  
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.Rscript" # rely only on defaults
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "example.Rscript" # rely only on defaults
 @
 
 If you specify default values when creating your \verb|OptionParser| then \emph{optparse} will use them as expected.
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.Rscript --mean=10 --sd=10 --count=3" 
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "example.Rscript --mean=10 --sd=10 --count=3" 
 @
 
 \begin{samepage}
@@ -46,8 +66,8 @@ Or you can specify your own values.
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.Rscript --quiet -c 4 --generator=\"runif\"" #  same as above but "quiet"
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "example.Rscript --quiet -c 4 --generator=\"runif\"" #  same as above but "quiet"
 @
 \end{samepage}
 
@@ -56,14 +76,15 @@ If you remember from the example program that \verb|--quiet| had \verb|action="s
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
-command <- "Rscript example.Rscript --silent -m 5" #  same as above but "quiet"
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "example.Rscript --silent -m 5" #  same as above but "quiet"
 @
 
-If you specify an illegal flag then \emph{getopt}, the package \emph{optparse} uses to do the actual command line parsing, will throw an error.  \emph{getopt} will also throw an error if you specify two options that use identical flags.
+If you specify an illegal flag then \emph{optparse} will throw an error.  \emph{optparse} will also throw an error if you specify two options that use identical flags. 
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s 2>&1", command),  intern=TRUE), sep="\n")   
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
 @
+
 \end{document}
