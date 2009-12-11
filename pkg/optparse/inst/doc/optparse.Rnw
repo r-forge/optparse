@@ -80,7 +80,15 @@ cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), se
 command <- "example.Rscript --silent -m 5" #  same as above but "quiet"
 @
 
-If you specify an illegal flag then \emph{optparse} will throw an error.  \emph{optparse} will also throw an error if you specify two options that use identical flags. 
+If you specify an illegal flag then \emph{optparse} will throw an error.  
+\newline\newline
+\noindent\verb|\Sexpr{paste("bash$", command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "example.Rscript -c 100 -c 2 -c 1000 -c 7" #  same as above but "quiet"
+@
+
+If you specify the same option multiple times then \emph{optparse} will use the value of the last option specified. 
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
