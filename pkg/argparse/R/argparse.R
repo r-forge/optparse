@@ -1,15 +1,9 @@
 #   The documentation for Python's optparse library, which this package 
 #   is based on, is Copyright 1990-2009, Python Software Foundation.
 
-setClass("OptionParser", representation(usage = "character", options = "list"))
+setClass("ArgumentParser", representation(usage = "character", arguments = "list"))
 
-# setMethod("initialize", "OptionParser", function(.Object) {
-#     return(add_option(.Object, "-h", "--help", action="store_true", 
-#                         dest="help", default=FALSE, 
-#                         help="Show this help message and exit"))
-# })
-
-OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
+ArgumentParser <- function(usage = "usage: %prog [options]", argument_list=list(),
                             add_help_option=TRUE, prog=NULL) {
     
     if(is.null(prog)) {
@@ -25,13 +19,13 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
     }
 
     if(add_help_option) {
-        option_list[[length(option_list) + 1]] <- 
-            make_option(c("-h", "--help"),
+        argument_list[[length(argument_list) + 1]] <- 
+            make_argument(c("-h", "--help"),
                 action="store_true", dest="help", default=FALSE,
                 help="Show this help message and exit")
     }
 
-    return(new("OptionParser", usage=usage, options=option_list))
+    return(new("ArgumentParser", usage=usage, arguments=argument_list))
 }
 
 make_argument <- function(name, nargs, help, metavar, dest) {
@@ -47,7 +41,7 @@ add_argument <- function(...) {
     warning("This function hasn't been implemented yet")
 }
 
-make_option <- function(opt_str, action="store", type=NULL,
+make_argument <- function(opt_str, action="store", type=NULL,
                      dest=NULL, default=NULL, help="", metavar=NULL) {
     short_flag <- opt_str[grepl("^-[[:alpha:]]", opt_str)]
     if(length(short_flag)) {} else { short_flag <- as.character(NA) }
@@ -80,12 +74,12 @@ make_option <- function(opt_str, action="store", type=NULL,
         }
     }
         
-    return(new("OptionParserOption", short_flag=short_flag, long_flag=long_flag,
+    return(new("ArgumentParserOption", short_flag=short_flag, long_flag=long_flag,
                         action=action, type=type, dest=dest, default=default, 
                         help=help, metavar=metavar))
 }
 
-setClass("OptionParserOption", representation(short_flag="character", 
+setClass("ArgumentParserOption", representation(short_flag="character", 
                                     long_flag="character",
                                     action="character",
                                     type="character",
@@ -94,15 +88,6 @@ setClass("OptionParserOption", representation(short_flag="character",
                                     help="character",
                                     metavar="character"),)
 
-# if (!isGeneric(".convert_to_getopt")) {
-#     if (is.function(".convert_to_getopt"))
-#         fun <- .convert_to_getopt
-#     else fun <- function(object) standardGeneric(".convert_to_getopt")
-#     setGeneric(".convert_to_getopt", fun)
-# }
-# 
-# 
-# setMethod(".convert_to_getopt", "OptionParserOption", function(object) {
 .convert_to_getopt <- function(object) {
     short_flag <- sub("^-", "", object@short_flag)
     long_flag <- sub("^--", "", object@long_flag)
@@ -113,109 +98,75 @@ setClass("OptionParserOption", representation(short_flag="character",
     }
     return( c( long_flag, short_flag, argument, object@type, object@help) )
 }
-#)
-
-# if (!isGeneric("add_option")) {
-#     if(is.function("add_option"))
-#         fun <- add_option
-#     else fun <- function(object, ...) standardGeneric("add_option")
-#     setGeneric("add_option", fun)
-# }
-# 
-# setMethod("add_option", "OptionParser", 
-add_option <- function(object, opt_str, action="store", type=NULL, 
+add_argument <- function(object, opt_str, action="store", type=NULL, 
                     dest=NULL, default=NULL, help="", metavar=NULL) {
-    options <- object@options
-    n_original_options <- length(options)
-    options[[n_original_options + 1]] <- make_option(opt_str=opt_str,
+    arguments <- object@arguments
+    n_original_arguments <- length(arguments)
+    arguments[[n_original_arguments + 1]] <- make_argument(opt_str=opt_str,
                                            action=action, type=type, dest=dest,
                                            default=default, help=help, metavar=metavar)        
-    object@options <- options
+    object@arguments <- arguments
     return(object)
 }
-#)
-
-# if (!isGeneric("print_help")) {
-#     if(is.function("print_help"))
-#         fun <- print_help
-#     else fun <- function(object) standardGeneric("print_help")
-#     setGeneric("print_help", fun)
-# }
-# 
-# setMethod("print_help", "OptionParser", 
 print_help <- function(object) {
     cat(object@usage, fill=TRUE)
     cat("\n")
-    cat("options:", sep="\n")    
+    cat("arguments:", sep="\n")    
 
-    options <- object@options
-    for(ii in seq(along=options)) {
-        option <- options[[ii]]
+    arguments <- object@arguments
+    for(ii in seq(along=arguments)) {
+        argument <- arguments[[ii]]
         cat("\t")
-        if(!is.na(option@short_flag)) {
-            cat(option@short_flag)
-            if( option@action == "store" ) {
-                cat(" ", toupper(option@metavar), sep="")
+        if(!is.na(argument@short_flag)) {
+            cat(argument@short_flag)
+            if( argument@action == "store" ) {
+                cat(" ", toupper(argument@metavar), sep="")
             }
             cat(", ")
         }
-        if(!is.null(option@long_flag)) {
-            cat(option@long_flag)
-            if( option@action == "store" ) {
-                cat("=", toupper(option@metavar), sep="")
+        if(!is.null(argument@long_flag)) {
+            cat(argument@long_flag)
+            if( argument@action == "store" ) {
+                cat("=", toupper(argument@metavar), sep="")
             }
         }
         cat("\n\t\t")
-        default <- as.character(option@default)
+        default <- as.character(argument@default)
         default_str <- ifelse(length(default), default, "NULL")
-        cat(sub("%default", default_str, option@help))
+        cat(sub("%default", default_str, argument@help))
         cat("\n\n")
     }
     return(invisible(NULL))
 }
-#)
-
-# if (!isGeneric("parse_args")) {
-#     if (is.function("parse_args")) {
-#         fun <- parse_args
-#     } else {
-#         fun <- function(object, args, ...) standardGeneric("parse_args")
-#     }
-#     setGeneric("parse_args", fun)
-# }
-# 
-# 
-# setMethod("parse_args", "OptionParser", function(object, args = commandArgs(TRUE), print_help_and_exit = TRUE) {
 parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = TRUE) {
-    n_options <- length( object@options )
-    spec <- matrix(NA, nrow = n_options, ncol = 5)
-    for (ii in seq(along = object@options)) {
-        spec[ii, ] <- .convert_to_getopt( object@options[[ii]] )
+    n_arguments <- length( object@arguments )
+    spec <- matrix(NA, nrow = n_arguments, ncol = 5)
+    for (ii in seq(along = object@arguments)) {
+        spec[ii, ] <- .convert_to_getopt( object@arguments[[ii]] )
     }
     opt <- .getopt(spec=spec, opt=args)
 
-    options <- list()
-    for (ii in seq(along = object@options)) {
-        option <- object@options[[ii]]
-        option_value <- opt[[sub("^--", "", option@long_flag)]] 
-        if( !is.null(option_value) ) {
-            if ( option@action == "store_false" ) {
-                options[[option@dest]] <- FALSE
+    arguments <- list()
+    for (ii in seq(along = object@arguments)) {
+        argument <- object@arguments[[ii]]
+        argument_value <- opt[[sub("^--", "", argument@long_flag)]] 
+        if( !is.null(argument_value) ) {
+            if ( argument@action == "store_false" ) {
+                arguments[[argument@dest]] <- FALSE
             } else {    
-                options[[option@dest]] <- option_value
+                arguments[[argument@dest]] <- argument_value
             }
         } else {
-            if( !is.null(option@default) & is.null(options[[option@dest]]) ) {
-                options[[option@dest]] <- option@default  
+            if( !is.null(argument@default) & is.null(arguments[[argument@dest]]) ) {
+                arguments[[argument@dest]] <- argument@default  
             }
         }
     }
-    if(options[["help"]] & print_help_and_exit) {
+    if(arguments[["help"]] & print_help_and_exit) {
         print_help(object)
         quit(status=1)
     }
         
-    return(options)
+    return(arguments)
 }
-#)
 
