@@ -35,7 +35,7 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
     is based on, is Copyright 2006-2009, Stven Bethard.
 }
 \seealso{
-    \code{\linkS4class{OptionParser}}
+    \code{\linkS4class{ArgumentParser}}
     \code{\link{print_help}}
-    \code{\link{OptionParser}}
+    \code{\link{ArgumentParser}}
 }

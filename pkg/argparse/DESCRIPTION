@@ -1,7 +1,7 @@
 Package: argparse
 Type: Package
 Title: Command line optional and positional argument parser.
-Version: 0.9.0
+Version: 0.1.0
 Date: 2010-01-26
 Author: Trevor Davis. 
     "getopt" function, some documentation and unit tests ported from Allen Day's ``getopt`` package. 
