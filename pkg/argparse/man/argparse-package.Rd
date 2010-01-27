@@ -59,18 +59,18 @@ argument, it is the subsequent option. short flags may be bundled together, shar
         #!/path/to/Rscript
         # specify our desired optional arguments in a list
         # by default ``ArgumentParser`` will automatically add an help option equivalent to 
-        # ``make_argument(c("-h", "--help"), action="store_true", default=FALSE, 
+        # ``make_argument("-h", "--help", action="store_true", default=FALSE, 
         #               help="Show this help message and exit")``
         argument_list <- list( 
-                make_argument(c("-v", "--verbose"), action="store_true", default=TRUE,
+                make_argument("-v", "--verbose", action="store_true", default=TRUE,
                     help="Print lots of output [default]"),
-                make_argument(c("-q", "--quietly"), action="store_false", 
+                make_argument("-q", "--quietly", action="store_false", 
                     dest="verbose", help="Print little output"),
-                make_argument(c("-c", "--count"), action="store", type="integer", default=10, 
+                make_argument("-c", "--count", action="store", type="integer", default=10, 
                     help="Number of random normals to generate [default \%default]"),
-                make_argument(c("-m", "--mean"), action="store", type="numeric", default=0,
+                make_argument("-m", "--mean", action="store", type="numeric", default=0,
                     help="Mean of random normals [default \%default]"),
-                make_argument(c("-s", "--sd"), action="store", type="numeric", default=1,
+                make_argument("-s", "--sd", action="store", type="numeric", default=1,
                     help="Standard deviation of random normals [default \%default]")
                 )
                                                 
@@ -90,9 +90,9 @@ argument, it is the subsequent option. short flags may be bundled together, shar
         if (require("RUnit")) {
 
 
-            parser <- ArgumentParser( argument_list = list( make_argument(c("-q", "--quietly"), action="store_false", dest="verbose"),
+            parser <- ArgumentParser( argument_list = list( make_argument("-q", "--quietly", action="store_false", dest="verbose"),
                                                 make_argument("--verbose", action="store_true", dest="verbose", default=TRUE),
-                                                make_argument(c("-f", "--filename"), action="store", metavar="file")))
+                                                make_argument("-f", "--filename", action="store", metavar="file")))
                                             
             # verbose should be false
             checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))

@@ -12,15 +12,15 @@ Functions to enable our ArgumentParser to recognize specific command line argume
     to create a new \code{ArgumentParser} instance.
 }
 \usage{
-    make_argument(opt_str, action = "store", type = NULL, dest = NULL, 
+    make_argument(..., action = "store", type = NULL, dest = NULL, 
                 default = NULL, help = "", metavar = NULL)
-    add_argument(object, opt_str, action="store", type=NULL, dest=NULL,
+    add_argument(object, ..., action="store", type=NULL, dest=NULL,
                default=NULL, help="", metavar=NULL) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{An instance of the \code{ArgumentParser} class}
-  \item{opt_str}{A character vector containing the string of the desired long flag comprised of \dQuote{--} followed by a letter and then a sequence of alphanumeric characters and optionally a string of the desired short flag comprised of the \dQuote{-} followed by a letter.}
+  \item{...}{The string of the desired long flag comprised of \dQuote{--} followed by a letter and then a sequence of alphanumeric characters and optionally a string of the desired short flag comprised of the \dQuote{-} followed by a letter.  See examples.}
   \item{action}{A character string that describes the action \code{optparse} should take when it encounters an argument,
       either \dQuote{store}, \dQuote{store_true}, or \dQuote{store_false}.  The default is \dQuote{store} which signifies 
       that \code{optparse} should store the specified following value if the optional argument is found on the command string.
@@ -68,14 +68,14 @@ Functions to enable our ArgumentParser to recognize specific command line argume
 }
 \examples{
     make_argument("--longflag")
-    make_argument(c("-l", "--longflag"))
+    make_argument("-l", "--longflag")
     make_argument("--integer", type="integer", default=5)
     make_argument("--integer", default=as.integer(5))  # same as previous
 
     # examples from package vignette
-    make_argument(c("-v", "--verbose"), action="store_true", default=TRUE,
+    make_argument("-v", "--verbose", action="store_true", default=TRUE,
         help="Print extra output [default]")
-    make_argument(c("-c", "--count"), type="integer", default=5, 
+    make_argument("-c", "--count", type="integer", default=5, 
         help="Number of random normals to generate [default \%default]",
         metavar="number")
     make_argument("--generator", default="rnorm", 

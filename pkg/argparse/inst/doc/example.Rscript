@@ -8,11 +8,11 @@ suppressPackageStartupMessages(library("argparse"))
 # make_argument(c("-h", "--help"), action="store_true", default=FALSE, 
 #               help="Show this help message and exit")
 argument_list <- list( 
-    make_argument(c("-v", "--verbose"), action="store_true", default=TRUE,
+    make_argument("-v", "--verbose", action="store_true", default=TRUE,
         help="Print extra output [default]"),
-    make_argument(c("-q", "--quietly"), action="store_false", 
+    make_argument("-q", "--quietly", action="store_false", 
         dest="verbose", help="Print little output"),
-    make_argument(c("-c", "--count"), type="integer", default=5, 
+    make_argument("-c", "--count", type="integer", default=5, 
         help="Number of random normals to generate [default %default]",
         metavar="number"),
     make_argument("--generator", default="rnorm", 

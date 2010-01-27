@@ -20,29 +20,17 @@ ArgumentParser <- function(usage = "usage: %prog [options]", argument_list=list(
 
     if(add_help_option) {
         argument_list[[length(argument_list) + 1]] <- 
-            make_argument(c("-h", "--help"),
-                action="store_true", dest="help", default=FALSE,
-                help="Show this help message and exit")
+            make_argument("-h", "--help",
+                action = "store_true", dest = "help", default = FALSE,
+                help = "Show this help message and exit")
     }
 
     return(new("ArgumentParser", usage=usage, arguments=argument_list))
 }
 
-make_argument <- function(name, nargs, help, metavar, dest) {
-    warning("This function hasn't been implemented yet")
-    warning("name not used yet")
-    warning("nargs not used yet")
-    warning("help not used yet")
-    warning("metavar not used yet")
-    warning("dest not used yet")
-}
-
-add_argument <- function(...) {
-    warning("This function hasn't been implemented yet")
-}
-
-make_argument <- function(opt_str, action="store", type=NULL,
+make_argument <- function(..., action="store", type=NULL,
                      dest=NULL, default=NULL, help="", metavar=NULL) {
+    opt_str <- c(...)
     short_flag <- opt_str[grepl("^-[[:alpha:]]", opt_str)]
     if(length(short_flag)) {} else { short_flag <- as.character(NA) }
     long_flag <- opt_str[grepl("^--[[:alpha:]]", opt_str)]
@@ -98,11 +86,11 @@ setClass("ArgumentParserOption", representation(short_flag="character",
     }
     return( c( long_flag, short_flag, argument, object@type, object@help) )
 }
-add_argument <- function(object, opt_str, action="store", type=NULL, 
+add_argument <- function(object, ..., action="store", type=NULL, 
                     dest=NULL, default=NULL, help="", metavar=NULL) {
     arguments <- object@arguments
     n_original_arguments <- length(arguments)
-    arguments[[n_original_arguments + 1]] <- make_argument(opt_str=opt_str,
+    arguments[[n_original_arguments + 1]] <- make_argument(opt_str, ...,
                                            action=action, type=type, dest=dest,
                                            default=default, help=help, metavar=metavar)        
     object@arguments <- arguments
