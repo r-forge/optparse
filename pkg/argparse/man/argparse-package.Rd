@@ -1,17 +1,17 @@
-\name{optparse-package}
+\name{argparse-package}
 \Rdversion{1.1}
-\alias{optparse-package}
-\alias{optparse}
+\alias{argparse-package}
+\alias{argparse}
 \docType{package}
 \title{
-Command line option parser
+Command line optional and positional argument parser
 }
 \description{
-Goal is to create an R package of a command line parser inspired by Python's \dQuote{optparse} library.
+Goal is to create an R package of a command line parser inspired by Python's \dQuote{argparse} library.
 }
 \details{
 %\tabular{ll}{
-%Package: \tab optparse\cr
+%Package: \tab argparse\cr
 %Type: \tab Package\cr
 %Version: \tab 0.8\cr
 %Date: \tab 2009-10-27\cr
@@ -20,7 +20,7 @@ Goal is to create an R package of a command line parser inspired by Python's \dQ
 %Depends: \tab R (>= 2.9.0), methods\cr
 %}
 %%%% Ported from Allen Day's getopt package
-\code{optparse} is primarily intended to be used with \dQuote{Rscript}. It facilitates writing \dQuote{#!} shebang scripts
+\code{argparse} is primarily intended to be used with \dQuote{Rscript}. It facilitates writing \dQuote{#!} shebang scripts
 that accept short and long flags/options. It can also be used from \R directly, but is probably less
 useful in this context.
 
@@ -39,16 +39,16 @@ argument, it is the subsequent option. short flags may be bundled together, shar
 \dQuote{"-"}, but only the final short flag is able to have a corresponding argument.
 %%%
 }
-\references{ Python's \code{optparse} library, which this package is based on,
-    is described here:  \url{http://docs.python.org/library/optparse.html} 
+\references{ Python's \code{argparse} library, which this package is based on,
+    is described here:  \url{http://argparse.googlecode.com/svn/tags/r101/doc/index.html} 
 }
 \author{ 
     Trevor Davis. 
 
     Some documentation and unit tests ported from Allen Day's getopt package.
 
-    The documentation for Python's optparse library, which this package 
-    is based on, is Copyright 1990-2009, Python Software Foundation.
+    The documentation for Python's argparse library, which this package 
+    is based on, is Copyright 2006-2009, Stven Bethard.
 }
 \keyword{ package }
 \seealso{
@@ -57,26 +57,26 @@ argument, it is the subsequent option. short flags may be bundled together, shar
 \examples{
     \dontrun{
         #!/path/to/Rscript
-        # specify our desired options in a list
-        # by default ``OptionParser`` will automatically add an help option equivalent to 
-        # ``make_option(c("-h", "--help"), action="store_true", default=FALSE, 
+        # specify our desired optional arguments in a list
+        # by default ``ArgumentParser`` will automatically add an help option equivalent to 
+        # ``make_argument(c("-h", "--help"), action="store_true", default=FALSE, 
         #               help="Show this help message and exit")``
-        option_list <- list( 
-                make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
+        argument_list <- list( 
+                make_argument(c("-v", "--verbose"), action="store_true", default=TRUE,
                     help="Print lots of output [default]"),
-                make_option(c("-q", "--quietly"), action="store_false", 
+                make_argument(c("-q", "--quietly"), action="store_false", 
                     dest="verbose", help="Print little output"),
-                make_option(c("-c", "--count"), action="store", type="integer", default=10, 
+                make_argument(c("-c", "--count"), action="store", type="integer", default=10, 
                     help="Number of random normals to generate [default \%default]"),
-                make_option(c("-m", "--mean"), action="store", type="numeric", default=0,
+                make_argument(c("-m", "--mean"), action="store", type="numeric", default=0,
                     help="Mean of random normals [default \%default]"),
-                make_option(c("-s", "--sd"), action="store", type="numeric", default=1,
+                make_argument(c("-s", "--sd"), action="store", type="numeric", default=1,
                     help="Standard deviation of random normals [default \%default]")
                 )
                                                 
         # get command line options, if not found set to specified defaults, 
         # and if help option encountered print help and exit
-        opt <- parse_args(OptionParser(option_list))
+        opt <- parse_args(ArgumentParser(argument_list))
 
         # print some progress messages to stderr if "quietly" wasn't requested
         if ( opt$verbose ) { write("writing...", stderr()) }
@@ -90,9 +90,9 @@ argument, it is the subsequent option. short flags may be bundled together, shar
         if (require("RUnit")) {
 
 
-            parser <- OptionParser( option_list = list( make_option(c("-q", "--quietly"), action="store_false", dest="verbose"),
-                                                make_option("--verbose", action="store_true", dest="verbose", default=TRUE),
-                                                make_option(c("-f", "--filename"), action="store", metavar="file")))
+            parser <- ArgumentParser( argument_list = list( make_argument(c("-q", "--quietly"), action="store_false", dest="verbose"),
+                                                make_argument("--verbose", action="store_true", dest="verbose", default=TRUE),
+                                                make_argument(c("-f", "--filename"), action="store", metavar="file")))
                                             
             # verbose should be false
             checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))

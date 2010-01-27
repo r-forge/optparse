@@ -1,9 +1,9 @@
-\name{OptionParserOption-class}
+\name{ArgumentParserOption-class}
 \Rdversion{1.1}
 \docType{class}
-\alias{OptionParserOption-class}
+\alias{ArgumentParserOption-class}
 
-\title{Class "OptionParserOption"}
+\title{Class "ArgumentParserOption"}
 \description{A class that defines how \code{optparse} should react to a given option it finds on the command line.}
 \section{Slots}{
 	 \describe{
@@ -23,15 +23,15 @@
 \author{ 
     Trevor Davis. 
 
-    The documentation for Python's optparse library, which this package 
-    is based on, is Copyright 1990-2009, Python Software Foundation.
+    The documentation for Python's argparse library, which this package 
+    is based on, is Copyright 2006-2009, Stven Bethard.
 }
 
 \seealso{
-    \code{\linkS4class{OptionParser}} relies on this class, 
-     use \code{\link{make_option}} and \code{\link{add_option}} to create an instance of this class.
+    \code{\linkS4class{ArgumentParser}} relies on this class, 
+     use \code{\link{make_argument}} and \code{\link{add_argument}} to create an instance of this class.
 }
 \examples{
-showClass("OptionParserOption")
+showClass("ArgumentParserOption")
 }
 \keyword{classes}

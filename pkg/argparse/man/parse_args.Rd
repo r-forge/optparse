@@ -2,20 +2,20 @@
 \Rdversion{1.1}
 \alias{parse_args}
 \title{
-    Parse command line options.
+    Parse command line optional and positional arguments.
 }
 \description{
-    \code{parse_args} parses command line options using an \code{OptionParser} instance for guidance.
+    \code{parse_args} parses command line optional and positional arguments using an \code{ArgumentParser} instance for guidance.
 }
 \usage{
 parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
 }
 \arguments{
   \item{object}{
-    An \code{OptionParser} instance.
+    An \code{ArgumentParser} instance.
 }
   \item{args}{
-    A character string containing command line options to be parsed.  
+    A character string containing command line optional and positional arguments to be parsed.  
     Default is everything after the Rscript program in the command line. 
 }
   \item{print_help_and_exit}{
@@ -23,18 +23,17 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE)
 }
 }
 \value{
-    Returns a list containing option values.
+    Returns a list containing argument values.
 }
-\references{ Python's \code{optparse} library, which this package is based on,
-    is described here:  \url{http://docs.python.org/library/optparse.html} 
+\references{ Python's \code{argparse} library, which this package is based on,
+    is described here:  \url{http://argparse.googlecode.com/svn/tags/r101/doc/index.html} 
 }
 \author{ 
     Trevor Davis. 
 
-    The documentation for Python's optparse library, which this package 
-    is based on, is Copyright 1990-2009, Python Software Foundation.
+    The documentation for Python's argparse library, which this package 
+    is based on, is Copyright 2006-2009, Stven Bethard.
 }
-
 \seealso{
     \code{\linkS4class{OptionParser}}
     \code{\link{print_help}}
