@@ -28,8 +28,9 @@ ArgumentParser <- function(usage = "usage: %prog [options]", argument_list=list(
     return(new("ArgumentParser", usage=usage, arguments=argument_list))
 }
 
-make_argument <- function(..., action="store", type=NULL,
-                     dest=NULL, default=NULL, help="", metavar=NULL) {
+make_argument <- function(..., action = "store", type = NULL,
+                    dest = NULL, default = NULL, help = "", metavar = NULL, 
+                    nargs = NULL) {
     opt_str <- c(...)
     short_flag <- opt_str[grepl("^-[[:alpha:]]", opt_str)]
     if(length(short_flag)) {} else { short_flag <- as.character(NA) }
@@ -62,9 +63,9 @@ make_argument <- function(..., action="store", type=NULL,
         }
     }
         
-    return(new("ArgumentParserOption", short_flag=short_flag, long_flag=long_flag,
-                        action=action, type=type, dest=dest, default=default, 
-                        help=help, metavar=metavar))
+    return(new("ArgumentParserOption", short_flag = short_flag, long_flag = long_flag,
+                        action = action, type = type, dest = dest, default = default, 
+                        help = help, metavar = metavar, nargs = nargs))
 }
 
 setClass("ArgumentParserOption", representation(short_flag="character", 
@@ -74,7 +75,8 @@ setClass("ArgumentParserOption", representation(short_flag="character",
                                     dest="character",
                                     default="ANY",
                                     help="character",
-                                    metavar="character"),)
+                                    metavar="character",
+                                    nargs = "ANY"),)
 
 .convert_to_getopt <- function(object) {
     short_flag <- sub("^-", "", object@short_flag)
@@ -90,7 +92,7 @@ add_argument <- function(object, ..., action="store", type=NULL,
                     dest=NULL, default=NULL, help="", metavar=NULL) {
     arguments <- object@arguments
     n_original_arguments <- length(arguments)
-    arguments[[n_original_arguments + 1]] <- make_argument(opt_str, ...,
+    arguments[[n_original_arguments + 1]] <- make_argument(...,
                                            action=action, type=type, dest=dest,
                                            default=default, help=help, metavar=metavar)        
     object@arguments <- arguments

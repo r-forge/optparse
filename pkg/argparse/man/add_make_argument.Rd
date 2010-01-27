@@ -1,4 +1,4 @@
-\name{add_argument}
+\name{make_argument}
 \Rdversion{1.1}
 \alias{add_argument}
 \alias{make_argument}
@@ -7,23 +7,23 @@ Functions to enable our ArgumentParser to recognize specific command line argume
 }
 \description{
 \code{add_argument} adds a argument to a prexisting \code{ArgumentParser} instance whereas
-     \code{make_argument} is used to create a list of \code{ArgumentParserOption} instances 
+     \code{make_argument} is used to create a list of \code{ArgumentParserArgument} instances 
     that will be used in the \code{argument_list} argument of the \code{ArgumentParser} function
     to create a new \code{ArgumentParser} instance.
 }
 \usage{
     make_argument(..., action = "store", type = NULL, dest = NULL, 
-                default = NULL, help = "", metavar = NULL)
+                default = NULL, help = "", metavar = NULL, nargs = NULL)
     add_argument(object, ..., action="store", type=NULL, dest=NULL,
-               default=NULL, help="", metavar=NULL) 
+               default=NULL, help="", metavar=NULL, nargs = 1) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{An instance of the \code{ArgumentParser} class}
   \item{...}{The string of the desired long flag comprised of \dQuote{--} followed by a letter and then a sequence of alphanumeric characters and optionally a string of the desired short flag comprised of the \dQuote{-} followed by a letter.  See examples.}
-  \item{action}{A character string that describes the action \code{optparse} should take when it encounters an argument,
+  \item{action}{A character string that describes the action \code{argparse} should take when it encounters an argument,
       either \dQuote{store}, \dQuote{store_true}, or \dQuote{store_false}.  The default is \dQuote{store} which signifies 
-      that \code{optparse} should store the specified following value if the optional argument is found on the command string.
+      that \code{argparse} should store the specified following value if the optional argument is found on the command string.
       \dQuote{store_true} stores \code{TRUE} if the optional argument is found and \dQuote{store_false} stores \code{FALSE} if the optional argument is found.
   }
   \item{type}{A character string that describes specifies which data type should be stored, 
@@ -33,11 +33,10 @@ Functions to enable our ArgumentParser to recognize specific command line argume
       \dQuote{character} if \code{action == "store"} and default is \code{NULL}.
   }
   \item{dest}{A character string that specifies what field in the list returned by \code{parse_args} 
-        should \code{optparse} store argument values.  Default is derived from the long flag in \code{opt_str}.
+        should \code{argparse} store argument values.  Default is derived from the long flag.
   }
   \item{default}{
-      The default value \code{optparse} should use if it does not find the optional argument on the command line.  
-      Default is derived from the long flag in \code{opt_str}.
+      The default value \code{argparse} should use if it does not find the optional argument on the command line.  
   }
   \item{help}{
       A character string describing the argument to be used by \code{print_help} in generating a usage message.
@@ -46,9 +45,10 @@ Functions to enable our ArgumentParser to recognize specific command line argume
   \item{metavar}{A character string that stands in for the argument when printing help text.
      Default is the value of \code{dest}.
   }
+  \item{nargs}{Either a integer representing the number of arguments to be collected into a vector or either '?', '*', or '+'.  Currently ignored for optional arguments.   Default is nargs = 1 for positional arguments and either nargs = 1 or 0 depending on the action of the optional argument.
 }
 \value{
-    Both \code{make_argument} and \code{add_argument} return instances of class \code{ArgumentParserOption}.
+    Both \code{make_argument} and \code{add_argument} return instances of class \code{ArgumentParserArgument}.
 }
 \references{ Python's \code{argparse} library, which this package is based on,
     is described here:  \url{http://argparse.googlecode.com/svn/tags/r101/doc/index.html} 
@@ -62,7 +62,7 @@ Functions to enable our ArgumentParser to recognize specific command line argume
 
 \seealso{
     \code{\linkS4class{ArgumentParser}}
-    \code{\linkS4class{ArgumentParserOption}}
+    \code{\linkS4class{ArgumentParserArgument}}
     \code{\link{parse_args}}
     \code{\link{ArgumentParser}}
 }

@@ -19,8 +19,8 @@
             \code{\%prog} is substituted with the value of the \code{prog} argument.
     }
     \item{argument_list}{
-        A list of of \code{ArgumentParserOption} instances that will define how \code{parse_args} reacts to command line options.
-            \code{ArgumentParserOption} instances are usually created by \code{make_argument} and can also be added to an existing
+        A list of of \code{ArgumentParserArgument} instances that will define how \code{parse_args} reacts to command line options.
+            \code{ArgumentParserArgument} instances are usually created by \code{make_argument} and can also be added to an existing
             \code{ArgumentParser} instance via the \code{add_argument} function.
     }
     \item{add_help_option}{

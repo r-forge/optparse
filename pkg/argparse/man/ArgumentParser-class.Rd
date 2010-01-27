@@ -8,7 +8,7 @@
 \section{Slots}{
 	 \describe{
     \item{\code{usage}:}{ A character string containing the Rscript program usage. }
-    \item{\code{arguments}:}{ A list of \code{ArgumentParserOption} instances. }
+    \item{\code{arguments}:}{ A list of \code{ArgumentParserArgument} instances. }
   }
 }
 \author{ 
