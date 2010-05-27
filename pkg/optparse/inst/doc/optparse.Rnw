@@ -7,20 +7,14 @@
 \setlength{\hoffset}{-0.5in}
 optparse is a command line option parser inspired by Python's ``optparse'' library.  Use this with Rscript to write ``\#!''-shebang scripts that accept short and long flags/options, generate a usage statement, and set default values for options that are not specified on the command line.
 
-%\lstinputlisting[language=R]{example.Rscript}
-%\newpage
 <<echo=FALSE>>=
 Rscript_executable <- file.path(R.home(), "bin", "Rscript")
 list_file_command <- "ls"
-show_file_command <- "cat example.Rscript"
+show_file_command <- "Rscript display_file.Rscript example.Rscript"
 chmod_command <- "chmod u+g example.Rscript"
-#cat(readLines(file.path("Rscripts", "example.R")), sep="\n")
-#command <- "cd ../Rscripts" # 
-#system(command)
-#setwd("../Rscripts")
 @
 
-In our working directory we have an example R script, named ``example.Rscript'' illustrating the use of the optparse package.
+In our working directory we have two example R scripts, named ``example.Rscript'' and ``display\_file.Rscript'' illustrating the use of the optparse package.
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", list_file_command)}|
 <<echo=FALSE>>=
@@ -90,6 +84,21 @@ command <- "example.Rscript -c 100 -c 2 -c 1000 -c 7" #  same as above but "quie
 
 If you specify the same option multiple times then \emph{optparse} will use the value of the last option specified. 
 \newline\newline
+\noindent\verb|\Sexpr{paste("bash$", command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+@
+
+Currently, \emph{optparse} does not recognize positional arguments, one needs to pull them out first.  Below we give an example program \emph{display\_file.Rscript}, which is a program that prints out the contents of a single file (which is a required argument, not an optional argument) and which accepts the normal help option as well as an option to add line numbers to the output.
+\newpage
+<<echo=FALSE>>=
+command <- "display_file.Rscript --help" 
+@
+\noindent\verb|\Sexpr{paste("bash$", command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "display_file.Rscript --add_numbers display_file.Rscript" 
+@
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
 cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
