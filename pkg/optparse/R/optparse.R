@@ -179,7 +179,7 @@ parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = T
     for (ii in seq(along = object@options)) {
         spec[ii, ] <- .convert_to_getopt( object@options[[ii]] )
     }
-    opt <- .getopt(spec=spec, opt=args)
+    opt <- getopt(spec=spec, opt=args)
 
     options <- list()
     for (ii in seq(along = object@options)) {
