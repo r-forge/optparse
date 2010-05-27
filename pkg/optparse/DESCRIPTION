@@ -1,12 +1,12 @@
 Package: optparse
 Type: Package
 Title: Command line option parser.
-Version: 0.8.2
+Version: 0.8.3
 Date: 2009-07-27
 Author: Trevor Davis. 
     "getopt" function, some documentation and unit tests ported from Allen Day's ``getopt`` package. 
     Based on the optparse Python library by the Python Software Foundation.
-Maintainer: Trevor Davis <Trevor.L.Davis@frb.gov>
+Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
 Description:  A command line parser inspired by Python's ``optparse`` libary to be used with Rscript
      to write "#!" shebang scripts that accept short and long flag/options.
 License: GPL (>= 2)
