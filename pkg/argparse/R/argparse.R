@@ -3,7 +3,7 @@
 
 setClass("ArgumentParser", representation(usage = "character", arguments = "list"))
 
-ArgumentParser <- function(usage = "usage: %prog [options]", argument_list=list(),
+ArgumentParser <- function(usage = "usage: %(prog) [options]", argument_list=list(),
                             add_help_option=TRUE, prog=NULL) {
     
     if(is.null(prog)) {
@@ -15,7 +15,7 @@ ArgumentParser <- function(usage = "usage: %prog [options]", argument_list=list(
         prog <- gsub("\\\\", "\\\\\\\\", prog)
     }
     if(length(prog)) {
-        usage <- sub("%prog", prog, usage)
+        usage <- sub("%\\(prog\\)", prog, usage)
     }
 
     if(add_help_option) {
@@ -63,12 +63,12 @@ make_argument <- function(..., action = "store", type = NULL,
         }
     }
         
-    return(new("ArgumentParserOption", short_flag = short_flag, long_flag = long_flag,
+    return(new("ArgumentParserArgument", short_flag = short_flag, long_flag = long_flag,
                         action = action, type = type, dest = dest, default = default, 
                         help = help, metavar = metavar, nargs = nargs))
 }
 
-setClass("ArgumentParserOption", representation(short_flag="character", 
+setClass("ArgumentParserArgument", representation(short_flag="character", 
                                     long_flag="character",
                                     action="character",
                                     type="character",
@@ -89,7 +89,7 @@ setClass("ArgumentParserOption", representation(short_flag="character",
     return( c( long_flag, short_flag, argument, object@type, object@help) )
 }
 add_argument <- function(object, ..., action="store", type=NULL, 
-                    dest=NULL, default=NULL, help="", metavar=NULL) {
+                    dest=NULL, default=NULL, help="", metavar=NULL, nargs = 1) {
     arguments <- object@arguments
     n_original_arguments <- length(arguments)
     arguments[[n_original_arguments + 1]] <- make_argument(...,
@@ -123,7 +123,7 @@ print_help <- function(object) {
         cat("\n\t\t")
         default <- as.character(argument@default)
         default_str <- ifelse(length(default), default, "NULL")
-        cat(sub("%default", default_str, argument@help))
+        cat(sub("%\\(default\\)", default_str, argument@help))
         cat("\n\n")
     }
     return(invisible(NULL))
@@ -134,7 +134,7 @@ parse_args <- function(object, args = commandArgs(TRUE), print_help_and_exit = T
     for (ii in seq(along = object@arguments)) {
         spec[ii, ] <- .convert_to_getopt( object@arguments[[ii]] )
     }
-    opt <- .getopt(spec=spec, opt=args)
+    opt <- getopt(spec=spec, opt=args)
 
     arguments <- list()
     for (ii in seq(along = object@arguments)) {

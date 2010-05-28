@@ -10,13 +10,13 @@
     is very useful for parsing options from the command line.
 }
 \usage{
-    ArgumentParser(usage = "usage: \%prog [options]", argument_list = list(), add_help_option = TRUE, prog = NULL)
+    ArgumentParser(usage = "usage: \%(prog) [options]", argument_list = list(), add_help_option = TRUE, prog = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
     \item{usage}{
         The program usage message that will printed out if \code{parse_args} finds a help option, 
-            \code{\%prog} is substituted with the value of the \code{prog} argument.
+            \code{\%(prog)} is substituted with the value of the \code{prog} argument.
     }
     \item{argument_list}{
         A list of of \code{ArgumentParserArgument} instances that will define how \code{parse_args} reacts to command line options.
@@ -27,12 +27,12 @@
         Whether a standard help option should be automatically added to the \code{ArgumentParser} instance.
     }
     \item{prog}{
-        Program name to be substituted for \code{\%prog} in the usage message, the default is to use
-            the actual Rscript file name if called by an Rscript file and otherwise keep \code{\%prog}.
+        Program name to be substituted for \code{\%(prog)} in the usage message, the default is to use
+            the actual Rscript file name if called by an Rscript file and otherwise keep \code{\%(prog)}.
     }
 }
 \value{
-    An istance of the \code{ArgumentParser} class.
+    An instance of the \code{ArgumentParser} class.
 }
 \references{ Python's \code{argparse} library, which this package is based on,
     is described here:  \url{http://argparse.googlecode.com/svn/tags/r101/doc/index.html} 

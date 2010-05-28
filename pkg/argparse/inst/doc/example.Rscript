@@ -13,14 +13,14 @@ argument_list <- list(
     make_argument("-q", "--quietly", action="store_false", 
         dest="verbose", help="Print little output"),
     make_argument("-c", "--count", type="integer", default=5, 
-        help="Number of random normals to generate [default %default]",
+        help="Number of random normals to generate [default %(default)]",
         metavar="number"),
     make_argument("--generator", default="rnorm", 
-        help = "Function to generate random deviates [default \"%default\"]"),
+        help = "Function to generate random deviates [default \"%(default)\"]"),
     make_argument("--mean", default=0, 
         help="Mean if generator == \"rnorm\" [default %default]"),
     make_argument("--sd", default=1, metavar="standard deviation",
-        help="Standard deviation if generator == \"rnorm\" [default %default]")
+        help="Standard deviation if generator == \"rnorm\" [default %(default)]")
     )
                                         
 # get command line options, if help option encountered print help and exit,

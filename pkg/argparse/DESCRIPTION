@@ -6,10 +6,10 @@ Date: 2010-01-26
 Author: Trevor Davis. 
     "getopt" function, some documentation and unit tests ported from Allen Day's ``getopt`` package. 
     Based on the argparse Python library documentation by Steven Bethard.
-Maintainer: Trevor Davis <Trevor.L.Davis@frb.gov>
+Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
 Description:  A command line parser inspired by Python's ``argparse`` libary to be used with Rscript
      to write "#!" shebang scripts that accept short and long flag/options.
 License: GPL (>= 2)
 URL: http://r-forge.r-project.org/projects/optparse
 LazyLoad: yes
-Depends: R (>= 2.9.0), methods
+Depends: R (>= 2.9.0), methods, getopt (>= 1.15)

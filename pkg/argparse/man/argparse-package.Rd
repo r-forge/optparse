@@ -67,11 +67,11 @@ argument, it is the subsequent option. short flags may be bundled together, shar
                 make_argument("-q", "--quietly", action="store_false", 
                     dest="verbose", help="Print little output"),
                 make_argument("-c", "--count", action="store", type="integer", default=10, 
-                    help="Number of random normals to generate [default \%default]"),
+                    help="Number of random normals to generate [default \%(default)]"),
                 make_argument("-m", "--mean", action="store", type="numeric", default=0,
                     help="Mean of random normals [default \%default]"),
                 make_argument("-s", "--sd", action="store", type="numeric", default=1,
-                    help="Standard deviation of random normals [default \%default]")
+                    help="Standard deviation of random normals [default \%(default)]")
                 )
                                                 
         # get command line options, if not found set to specified defaults, 

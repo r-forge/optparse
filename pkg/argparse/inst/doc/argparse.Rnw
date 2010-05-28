@@ -45,7 +45,7 @@ In order for a *nix system to recognize the ``\#!''-shebang line you need to mar
 command <- "example.Rscript --help" # same as system("Rscript example.Rscript -h")
 @
 
-By default \emph{optparse} will generate a help message if it encounters \verb|--help| or \verb|-h| on the command line.  Note how \verb|%default| in the example program was replaced by the actual default values in the help statement that \emph{optparse} generated.  
+By default \emph{optparse} will generate a help message if it encounters \verb|--help| or \verb|-h| on the command line.  Note how \verb|%(default)| in the example program was replaced by the actual default values in the help statement that \emph{optparse} generated.  
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=

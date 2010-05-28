@@ -46,6 +46,7 @@ Functions to enable our ArgumentParser to recognize specific command line argume
      Default is the value of \code{dest}.
   }
   \item{nargs}{Either a integer representing the number of arguments to be collected into a vector or either '?', '*', or '+'.  Currently ignored for optional arguments.   Default is nargs = 1 for positional arguments and either nargs = 1 or 0 depending on the action of the optional argument.
+  }
 }
 \value{
     Both \code{make_argument} and \code{add_argument} return instances of class \code{ArgumentParserArgument}.
@@ -76,14 +77,14 @@ Functions to enable our ArgumentParser to recognize specific command line argume
     make_argument("-v", "--verbose", action="store_true", default=TRUE,
         help="Print extra output [default]")
     make_argument("-c", "--count", type="integer", default=5, 
-        help="Number of random normals to generate [default \%default]",
+        help="Number of random normals to generate [default \%(default)]",
         metavar="number")
     make_argument("--generator", default="rnorm", 
-        help = "Function to generate random deviates [default \"\%default\"]")
+        help = "Function to generate random deviates [default \"\%(default)\"]")
     make_argument("--mean", default=0, 
         help="Mean if generator == \"rnorm\" [default \%default]")
     make_argument("--sd", default=1, metavar="standard deviation",
-        help="Standard deviation if generator == \"rnorm\" [default \%default]")
+        help="Standard deviation if generator == \"rnorm\" [default \%(default)]")
 \testonly{
     if (require("RUnit")) {
         checkEquals(make_argument("--integer", type="integer", default=5),
