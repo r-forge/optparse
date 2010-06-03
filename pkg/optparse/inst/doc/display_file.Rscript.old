@@ -1,0 +1,30 @@
+#!/usr/bin/env Rscript
+suppressPackageStartupMessages(library("optparse"))
+
+option_list <- list( 
+    make_option(c("-n", "--add_numbers"), action="store_true", default=FALSE,
+        help="Print line number at the beginning of each line [default]")
+    )
+parser <- OptionParser(usage = "%prog [options] file", option_list=option_list)
+
+n_args_positional <- 1
+args <- commandArgs(TRUE)
+n_args <- length(args)
+args_positional <- args[((n_args - n_args_positional + 1)):n_args]
+if(n_args_positional < n_args) {
+    args_options <- args[-((n_args - n_args_positional + 1):n_args)]                                        
+} else {
+    args_options <- NULL
+}
+if(args_positional %in% c("-h", "--help")) {
+    print_help(parser)
+    quit(status = 1)
+}
+opt <- parse_args(parser, args = args_options)
+
+file_text <- readLines(args_positional)
+if(opt$add_numbers) {
+    cat(paste(1:length(file_text), file_text), sep = "\n")
+} else {
+    cat(file_text, sep = "\n")
+}
