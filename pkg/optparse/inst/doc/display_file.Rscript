@@ -7,7 +7,7 @@ option_list <- list(
     )
 parser <- OptionParser(usage = "%prog [options] file", option_list=option_list)
 
-arguments <- parse_args(parser, args = args_options, positional_arguments = TRUE)
+arguments <- parse_args(parser, positional_arguments = TRUE)
 opt <- arguments$options
 
 file_text <- readLines(arguments$args)
