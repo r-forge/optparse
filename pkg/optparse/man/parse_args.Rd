@@ -8,7 +8,8 @@
     \code{parse_args} parses command line options using an \code{OptionParser} instance for guidance.
 }
 \usage{
-parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE, positional_arguments = FALSE)
+parse_args(object, args = commandArgs(trailingOnly = TRUE), 
+        print_help_and_exit=TRUE, positional_arguments = FALSE)
 }
 \arguments{
   \item{object}{
@@ -30,6 +31,9 @@ parse_args(object, args = commandArgs(TRUE), print_help_and_exit=TRUE, positiona
 }
 \references{ Python's \code{optparse} library, which this package is based on,
     is described here:  \url{http://docs.python.org/library/optparse.html} 
+}
+\section{Acknowledgement}{
+    A big thanks to Steve Lianoglou for a bug report and patch.
 }
 \author{ 
     Trevor Davis. 
@@ -86,10 +90,10 @@ parse_args(parser, args = c("-add_numbers", "example.txt"), positional_arguments
                     sort_list(list(sd = 3, verbose = FALSE, help = FALSE, 
                         count = 5, mean = 0, generator = "rnorm")))
         checkEquals(sort_list(parse_args(OptionParser(option_list = option_list), 
-                            args = "", positional_arguments = TRUE)),
+                            args = character(0), positional_arguments = TRUE)),
                     sort_list(list(options = list(sd = 1, help = FALSE, verbose = TRUE, 
                                     count = 5, mean = 0, generator = "rnorm"),
-                                args = "")))
+                                args = character(0))))
         checkEquals(sort_list(parse_args(OptionParser(option_list = option_list), 
                                 args = c("-c", "10"))),
                     sort_list(list(sd = 1, help = FALSE, verbose = TRUE, 
@@ -98,6 +102,10 @@ parse_args(parser, args = c("-add_numbers", "example.txt"), positional_arguments
                                 positional_arguments = TRUE)),
                     sort_list(list(options = list(add_numbers = TRUE, help = FALSE), 
                                  args = c("example.txt"))))
+        checkEquals(sort_list(parse_args(parser, args = c("--add_numbers"), 
+                                positional_arguments = TRUE)),
+                    sort_list(list(options = list(add_numbers = TRUE, help = FALSE), 
+                                 args = character(0))))
         checkEquals(sort_list(parse_args(parser, args = c("-add_numbers", "example.txt"), 
                                     positional_arguments = TRUE)),
                     sort_list(list(options = list(add_numbers = FALSE, help = FALSE), 

@@ -133,7 +133,7 @@ print_help <- function(object) {
     return(invisible(NULL))
 }
 
-parse_args <- function(object, args = commandArgs(TRUE), 
+parse_args <- function(object, args = commandArgs(trailingOnly = TRUE), 
                     print_help_and_exit = TRUE, positional_arguments = FALSE) {
     n_options <- length( object@options )
     spec <- matrix(NA, nrow = n_options, ncol = 5)
@@ -160,6 +160,8 @@ parse_args <- function(object, args = commandArgs(TRUE),
             } else {
                 args <- NULL
             }
+        } else {
+            arguments_positional <- character(0)
         }
     }
     options_list <- list()
