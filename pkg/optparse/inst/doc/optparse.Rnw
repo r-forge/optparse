@@ -11,7 +11,7 @@ optparse is a command line option parser inspired by Python's ``optparse'' libra
 Rscript_executable <- file.path(R.home(), "bin", "Rscript")
 list_file_command <- "ls"
 show_file_command <- "Rscript display_file.Rscript example.Rscript"
-chmod_command <- "chmod u+g example.Rscript"
+chmod_command <- "chmod ug+x example.Rscript"
 @
 
 In our working directory we have two example R scripts, named ``example.Rscript'' and ``display\_file.Rscript'' illustrating the use of the optparse package.
