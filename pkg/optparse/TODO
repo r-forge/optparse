@@ -1,7 +1,0 @@
-unit tests for parse_args
-option which returns multiple values
-In parse_args example:
-    Warning message:
-    In max(which(args %in% os_and_n_arg$option_strings)) :
-      no non-missing arguments to max; returning -Inf
-
