@@ -10,29 +10,30 @@ optparse is a command line option parser inspired by Python's ``optparse'' libra
 <<echo=FALSE>>=
 Rscript_executable <- file.path(R.home(), "bin", "Rscript")
 list_file_command <- "ls"
-show_file_command <- "Rscript display_file.Rscript example.Rscript"
-chmod_command <- "chmod ug+x example.Rscript"
+chmod_command <- "chmod ug+x display_file.Rscript example.Rscript"
+path_command <- "export PATH=$PATH:`pwd`
 @
 
 In our working directory we have two example R scripts, named ``example.Rscript'' and ``display\_file.Rscript'' illustrating the use of the optparse package.
 \newline\newline
-\noindent\verb|\Sexpr{paste("bash$", list_file_command)}|
 <<echo=FALSE>>=
 cat(system(sprintf("%s", list_file_command), intern=TRUE), sep="\n")
+command <- "display_file.Rscript example.Rscript" # to show file
 @
+
+In order for a *nix system to recognize a ``\#!''-shebang line you need to mark the file executable with the ``chmod'' command, it also helps to add the directory containing your Rscripts to your path:
+\newline\newline
+\noindent\verb|\Sexpr{paste("bash$", chmod_command)}|
+\noindent\verb|\Sexpr{paste("bash$", path_command)}|
 
 \newpage
 
 Here is what ``example.Rscript'' contains:
 \newline\newline
-\noindent\verb|\Sexpr{paste("bash$", show_file_command)}|
+\noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s", show_file_command), intern=TRUE), sep="\n")
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
 @
-
-In order for a *nix system to recognize the ``\#!''-shebang line you need to mark the file executable with the ``chmod'' command:
-\newline\newline
-\noindent\verb|\Sexpr{paste("bash$", chmod_command)}|
 
 \newpage
 <<echo=FALSE>>=
