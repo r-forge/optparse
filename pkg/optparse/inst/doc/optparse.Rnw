@@ -11,11 +11,12 @@ optparse is a command line option parser inspired by Python's ``optparse'' libra
 Rscript_executable <- file.path(R.home(), "bin", "Rscript")
 list_file_command <- "ls"
 chmod_command <- "chmod ug+x display_file.Rscript example.Rscript"
-path_command <- "export PATH=$PATH:`pwd`
+path_command <- "export PATH=$PATH:`pwd`"
 @
 
 In our working directory we have two example R scripts, named ``example.Rscript'' and ``display\_file.Rscript'' illustrating the use of the optparse package.
 \newline\newline
+\noindent\verb|\Sexpr{paste("bash$", list_file_command)}|
 <<echo=FALSE>>=
 cat(system(sprintf("%s", list_file_command), intern=TRUE), sep="\n")
 command <- "display_file.Rscript example.Rscript" # to show file
@@ -24,6 +25,7 @@ command <- "display_file.Rscript example.Rscript" # to show file
 In order for a *nix system to recognize a ``\#!''-shebang line you need to mark the file executable with the ``chmod'' command, it also helps to add the directory containing your Rscripts to your path:
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", chmod_command)}|
+\newline
 \noindent\verb|\Sexpr{paste("bash$", path_command)}|
 
 \newpage
