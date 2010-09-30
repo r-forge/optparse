@@ -103,7 +103,7 @@ add_option <- function(object, opt_str, action="store", type=NULL,
 }
 
 print_help <- function(object) {
-    cat(object@usage, fill=TRUE)
+    cat("usage: ", object@usage, fill = TRUE)
     cat("\n")
     cat("options:", sep="\n")    
 

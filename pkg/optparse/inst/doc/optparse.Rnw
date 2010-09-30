@@ -105,6 +105,17 @@ command <- "display_file.Rscript --add_numbers display_file.Rscript"
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
 cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "display_file.Rscript non_existent_file.txt" 
+@
+\noindent\verb|\Sexpr{paste("bash$", command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+command <- "display_file.Rscript"
+@
+\newpage
+\noindent\verb|\Sexpr{paste("bash$", command)}|
+<<echo=FALSE>>=
+cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
 @
 
 \end{document}
