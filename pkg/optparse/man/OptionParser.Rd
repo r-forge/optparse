@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \alias{OptionParser}
 \title{
-    A function to create an istance of the class OptionParser.
+    A function to create an instance of the class OptionParser.
 }
 \description{
     This function is used to create an instance of the class \code{OptionParser} which when combined 
@@ -32,7 +32,7 @@
     }
 }
 \value{
-    An istance of the \code{OptionParser} class.
+    An instance of the \code{OptionParser} class.
 }
 \references{ Python's \code{optparse} library, which this package is based on,
     is described here:  \url{http://docs.python.org/library/optparse.html} 
