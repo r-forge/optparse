@@ -2,7 +2,7 @@ Package: argparse
 Type: Package
 Title: Command line optional and positional argument parser.
 Version: 0.1.0
-Date: 2010-01-26
+Date: 2011-04-23
 Author: Trevor Davis. 
     "getopt" function, some documentation and unit tests ported from Allen Day's ``getopt`` package. 
     Based on the argparse Python library documentation by Steven Bethard.
@@ -13,3 +13,4 @@ License: GPL (>= 2)
 URL: http://r-forge.r-project.org/projects/optparse
 LazyLoad: yes
 Depends: R (>= 2.9.0), methods, getopt (>= 1.15)
+Suggests: testthat
