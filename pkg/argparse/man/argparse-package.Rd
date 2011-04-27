@@ -55,36 +55,6 @@ argument, it is the subsequent option. short flags may be bundled together, shar
  \code{\link[getopt]{getopt}} 
 }
 \examples{
-    \dontrun{
-        #!/path/to/Rscript
-        # specify our desired optional arguments in a list
-        # by default ``ArgumentParser`` will automatically add an help option equivalent to 
-        # ``make_argument("-h", "--help", action="store_true", default=FALSE, 
-        #               help="Show this help message and exit")``
-        argument_list <- list( 
-                make_argument("-v", "--verbose", action="store_true", default=TRUE,
-                    help="Print lots of output [default]"),
-                make_argument("-q", "--quietly", action="store_false", 
-                    dest="verbose", help="Print little output"),
-                make_argument("-c", "--count", action="store", type="integer", default=10, 
-                    help="Number of random normals to generate [default \%(default)]"),
-                make_argument("-m", "--mean", action="store", type="numeric", default=0,
-                    help="Mean of random normals [default \%default]"),
-                make_argument("-s", "--sd", action="store", type="numeric", default=1,
-                    help="Standard deviation of random normals [default \%(default)]")
-                )
-                                                
-        # get command line options, if not found set to specified defaults, 
-        # and if help option encountered print help and exit
-        opt <- parse_args(ArgumentParser(argument_list))
-
-        # print some progress messages to stderr if "quietly" wasn't requested
-        if ( opt$verbose ) { write("writing...", stderr()) }
-
-        # do some operations based on user input
-        cat(paste(rnorm(opt$count, mean=opt$mean, sd=opt$sd), collapse="\n"))
-        cat("\n")
-    }
 
     \testonly{
         if (require("RUnit")) {
