@@ -84,13 +84,4 @@ Functions to enable our OptionParser to recognize specific command line options.
         help="Mean if generator == \"rnorm\" [default \%default]")
     make_option("--sd", default=1, metavar="standard deviation",
         help="Standard deviation if generator == \"rnorm\" [default \%default]")
-\testonly{
-    if (require("RUnit")) {
-        checkEquals(make_option("--integer", type="integer", default=5),
-                    make_option("--integer", default=as.integer(5)))
-        checkEquals(make_option("--logical", type="logical", default="TRUE"),
-                    make_option("--logical", default=TRUE))
-        checkException(make_option("badflag"))
-    }
-}
 }
