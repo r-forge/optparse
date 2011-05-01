@@ -55,19 +55,8 @@ argument, it is the subsequent option. short flags may be bundled together, shar
  \code{\link[getopt]{getopt}} 
 }
 \examples{
-
-    \testonly{
-        if (require("RUnit")) {
-
-
-            parser <- ArgumentParser( argument_list = list( make_argument("-q", "--quietly", action="store_false", dest="verbose"),
-                                                make_argument("--verbose", action="store_true", dest="verbose", default=TRUE),
-                                                make_argument("-f", "--filename", action="store", metavar="file")))
-                                            
-            # verbose should be false
-            checkEquals(parse_args(parser, "-q"), list(verbose = FALSE, help = FALSE))
-            checkException(checkEquals(parse_args(parser, "-q"), list(verbose = TRUE, help = FALSE)))
-            print_help(parser)
-        }
+    example_file <- system.file("doc", "example.Rscript", package = "optparse")
+    \dontrun{
+        edit(file = example_file)
     }
 }

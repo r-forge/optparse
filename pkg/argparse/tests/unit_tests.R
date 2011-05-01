@@ -1,19 +1,8 @@
 library("testthat")
+library("getopt")
 library("argparse")
 
 context("Unit tests")
-
-test_that("Test ``testthat``", {
-    expect_that(1, equals(1))
-    expect_equal(2, 2)
-})
-
-context("Unit tests 2")
-test_that("Test ``testthat2``", {
-    x <- 2
-    expect_that(1, equals(1))
-    expect_equal(x, 2)
-})
 
 context("make_argument")
 test_that("make_argument works as expected", {
@@ -46,7 +35,8 @@ test_that("parse_args works as expected", {
         make_argument(c("-n", "--add_numbers"), action="store_true", default=FALSE,
             help="Print line number at the beginning of each line [default]")
         )
-    parser <- ArgumentParser(usage = "\\%prog [options] file", argument_list=argument_list2)
+    parser <- ArgumentParser(argument_list=argument_list)
+    parser2 <- ArgumentParser(usage = "\\%prog [options] file", argument_list=argument_list2)
     sort_list <- function(unsorted_list) { 
         for(ii in seq(along=unsorted_list)) {
             if(is.list(unsorted_list[[ii]])) {
@@ -55,14 +45,15 @@ test_that("parse_args works as expected", {
         }
         unsorted_list[sort(names(unsorted_list))] 
     }
-    expect_equal(sort_list(parse_args(ArgumentParser(argument_list = argument_list), 
-                            args = c("--sd=3", "--quietly"))),
+    expect_equal(sort_list(parse_args(parser, args = c("--sd=3", "--quietly"))),
                 sort_list(list(sd = 3, verbose = FALSE, help = FALSE, 
                     count = 5, mean = 0, generator = "rnorm")))
-    expect_equal(sort_list(parse_args(ArgumentParser(argument_list = argument_list), 
-                            args = c("-c", "10"))),
+    expect_equal(sort_list(parse_args(parser, args = c("-c", "10"))),
                 sort_list(list(sd = 1, help = FALSE, verbose = TRUE, 
                             count = 10, mean = 0, generator = "rnorm")))
-    expect_that(parse_args(parser, args = c("-add_numbers", "example.txt")), throws_error())
+    expect_that(parse_args(parser2, args = c("-add_numbers", "example.txt")), throws_error())
 
+    # verbose should be false
+    expect_that(parse_args(parser, "-q")$verbose, is_false())
+    expect_that(print_help(parser), prints_text("usage"))
 })

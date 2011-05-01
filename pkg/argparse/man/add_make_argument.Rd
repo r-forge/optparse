@@ -85,13 +85,4 @@ Functions to enable our ArgumentParser to recognize specific command line argume
         help="Mean if generator == \"rnorm\" [default \%default]")
     make_argument("--sd", default=1, metavar="standard deviation",
         help="Standard deviation if generator == \"rnorm\" [default \%(default)]")
-\testonly{
-    if (require("RUnit")) {
-        checkEquals(make_argument("--integer", type="integer", default=5),
-                    make_argument("--integer", default=as.integer(5)))
-        checkEquals(make_argument("--logical", type="logical", default="TRUE"),
-                    make_argument("--logical", default=TRUE))
-        checkException(make_argument("badflag"))
-    }
-}
 }
