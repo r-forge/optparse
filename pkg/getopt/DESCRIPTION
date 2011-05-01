@@ -8,3 +8,4 @@ Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
 Description: Use this with Rscript to write ``#!'' shebang scripts that
         accept short and long flags/options.
 License: GPL (>= 2)
+Suggests: testthat
