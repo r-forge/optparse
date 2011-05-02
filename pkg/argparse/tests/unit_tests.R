@@ -37,10 +37,10 @@ test_that("parse_args works as expected", {
         )
     parser <- ArgumentParser(argument_list=argument_list)
     parser2 <- ArgumentParser(usage = "\\%prog [options] file", argument_list=argument_list2)
-    sort_list <- function(unsorted_list) { 
+    sort_list <- function(unsorted_list) {
         for(ii in seq(along=unsorted_list)) {
             if(is.list(unsorted_list[[ii]])) {
-                unsorted_list[[ii]] <- unsorted_list[[ii]][sort(names(unsorted_list[[ii]]))]
+                unsorted_list[[ii]] <- sort_list(unsorted_list[[ii]])
             }
         }
         unsorted_list[sort(names(unsorted_list))] 

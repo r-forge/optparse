@@ -32,10 +32,10 @@ test_that("parse_args works as expected", {
             help="Print line number at the beginning of each line [default]")
         )
     parser <- OptionParser(usage = "\\%prog [options] file", option_list=option_list2)
-    sort_list <- function(unsorted_list) { 
+    sort_list <- function(unsorted_list) {
         for(ii in seq(along=unsorted_list)) {
             if(is.list(unsorted_list[[ii]])) {
-                unsorted_list[[ii]] <- unsorted_list[[ii]][sort(names(unsorted_list[[ii]]))]
+                unsorted_list[[ii]] <- sort_list(unsorted_list[[ii]])
             }
         }
         unsorted_list[sort(names(unsorted_list))] 
