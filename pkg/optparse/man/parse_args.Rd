@@ -33,7 +33,7 @@ parse_args(object, args = commandArgs(trailingOnly = TRUE),
     is described here:  \url{http://docs.python.org/library/optparse.html} 
 }
 \section{Acknowledgement}{
-    A big thanks to Steve Lianoglou for a bug report and patch.
+    A big thanks to Steve Lianoglou for a bug report and patch, Juan Carlos Borrás for a bug report, Jim Nikelski for a bug report and patch.
 }
 \author{ 
     Trevor Davis. 

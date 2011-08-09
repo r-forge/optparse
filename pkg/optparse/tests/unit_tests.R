@@ -79,4 +79,26 @@ test_that("parse_args works as expected", {
     opt <- parse_args(optparser, c("-s", "FOO=bar"))
     opt_alt <- parse_args(optparser, c("--substitutions=FOO=bar"))
     expect_that(opt, equals(opt_alt))
+
+    # test bug found by Jim Nikelski about multiple short flag options "-abc" with positional_arguments = TRUE
+    expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
+                        args = c("-qc", "10"), positional_arguments = TRUE)),
+                sort_list(list(options = list(sd = 1, help = FALSE, verbose = FALSE, 
+                                count = 10, mean = 0, generator = "rnorm"),
+                            args = character(0))))
+    expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
+                        args = c("-qcde", "10"), positional_arguments = TRUE)),
+                sort_list(list(options = list(sd = 1, help = FALSE, verbose = TRUE, 
+                                count = 5, mean = 0, generator = "rnorm"),
+                            args = c("-qcde", "10"))))
+    expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
+                        args = c("CMD", "-qc", "10", "bumblebee"), positional_arguments = TRUE)),
+                sort_list(list(options = list(sd = 1, help = FALSE, verbose = FALSE, 
+                                count = 10, mean = 0, generator = "rnorm"),
+                            args = c("CMD", "bumblebee"))))
+    expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
+                        args = c("CMD", "-qc", "10", "--qcdefg", "--what-what", "bumblebee"), positional_arguments = TRUE)),
+                sort_list(list(options = list(sd = 1, help = FALSE, verbose = FALSE, 
+                                count = 10, mean = 0, generator = "rnorm"),
+                            args = c("CMD", "--qcdefg", "--what-what", "bumblebee"))))
 })

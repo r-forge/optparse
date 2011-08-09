@@ -136,34 +136,36 @@ print_help <- function(object) {
 parse_args <- function(object, args = commandArgs(trailingOnly = TRUE), 
                     print_help_and_exit = TRUE, positional_arguments = FALSE) {
     n_options <- length( object@options )
+
+    # Convert our option specification into ``getopt`` format
     spec <- matrix(NA, nrow = n_options, ncol = 5)
     for (ii in seq(along = object@options)) {
         spec[ii, ] <- .convert_to_getopt( object@options[[ii]] )
     }
 
+    # pull out positional arguments if ``positional_arguments`` was set to TRUE
     if(positional_arguments) {
         os_and_n_arg <- .get_option_strings_and_n_arguments(object)
-        suppressWarnings(
-            last_option_index <- max(which(args %in% os_and_n_arg$option_strings))
-        )
-        if(last_option_index == -Inf) {
-            n_option_arguments <- 0
-        } else {
-            last_option <- args[last_option_index]
-            n_arg <- os_and_n_arg$n_arguments[which(os_and_n_arg$option_strings == last_option)]
-            n_option_arguments <- last_option_index + n_arg
-        }
-        if(length(args) > n_option_arguments) {
-            arguments_positional <- args[(n_option_arguments + 1):length(args)]
-            if(n_option_arguments) {
-                args <- args[1:n_option_arguments]
+        original_arguments <- args
+        args <- NULL
+        arguments_positional <- character(0)
+        is_taken <- FALSE # set to true if optional argument needs to take next argument
+        for(argument in original_arguments) {
+            if(is_taken) {
+                args <- c(args, argument)
+                is_taken <- FALSE
             } else {
-                args <- NULL
+                if(.is_option_string(argument, object)) {
+                    args <- c(args, argument)
+                    if(.requires_argument(argument, object))
+                        is_taken <- TRUE
+                } else {
+                    arguments_positional <- c(arguments_positional, argument)
+                }          
             }
-        } else {
-            arguments_positional <- character(0)
         }
     }
+
     options_list <- list()
     if(length(args)) {
         opt <- getopt(spec=spec, opt=args)
@@ -197,6 +199,67 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
     }
 }
 
+# Tells me whether a string is a valid option
+.is_option_string <- function(argument, object) {
+    if(.is_long_flag(argument)) {
+        return(argument %in% .get_long_options(object))
+    } else if(.is_short_flag(argument)) {
+        return(all(.expand_short_option(argument) %in% .get_short_options(object)))
+    } else {
+        return(FALSE)
+    }
+}
+# Tells me if an option string needs to take an argument
+.requires_argument <- function(argument, object) {
+    if(.is_long_flag(argument)) {
+        if(grepl("=", argument)) {
+            return(FALSE)
+        } else {
+            for (ii in seq(along = object@options)) {
+                option <- object@options[[ii]]
+                if(option@long_flag == argument)
+                    return(option@action == "store") 
+            }
+        }
+    } else { # is a short flag
+        last_flag <- tail(.expand_short_option(argument), 1)
+        for (ii in seq(along = object@options)) {
+            option <- object@options[[ii]]
+            if(option@short_flag == last_flag)
+                return(option@action == "store") 
+        }
+    }
+}
+# convenience functions that tells if argument is a type of flag and returns all long flag options or short flag options
+.is_long_flag <- function(argument) { return(grepl("^--", argument)) }
+.is_short_flag <- function(argument) { return(grepl("^-[^-]", argument)) }
+.get_long_options <- function(object) {
+    long_options <- vector("character")
+    for(ii in seq(along = object@options)) {
+        long_options <- c(long_options, object@options[[ii]]@long_flag)
+    }
+    return(long_options)
+}
+.get_short_options <- function(object) {
+    short_options <- vector("character")
+    for(ii in seq(along = object@options)) {
+        short_options <- c(short_options, object@options[[ii]]@short_flag)
+    }
+    return(short_options)
+}
+# .expand_short_option("-cde") = c("-c", "-d", "-e"), based on function by Jim Nikelski
+.expand_short_option <- function(argument) {
+    if(nchar(argument) == 2) {
+        return(argument)
+    } else {
+        argument <- substr(argument, 2, nchar(argument)) # remove leading dash
+        argument <- strsplit(argument, "")[[1]] # split into individual characters
+        argument <- paste("-", argument, sep="") # add leading dash to each short option
+        return(argument)
+    }
+}
+
+# Returns a list with a field of option names and a field of number arguments option names take
 .get_option_strings_and_n_arguments <- function(object) {
     option_strings <- vector("character")
     n_arguments <- vector("numeric")
