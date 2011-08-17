@@ -1,5 +1,6 @@
 \name{parse_args}
 \Rdversion{1.1}
+\encoding{UTF-8}
 \alias{parse_args}
 \title{
     Parse command line options.
