@@ -1,6 +1,30 @@
 library("testthat")
 library("optparse")
 
+option_list <- list( 
+    make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
+        help="Print extra output [default]"),
+    make_option(c("-q", "--quietly"), action="store_false", 
+        dest="verbose", help="Print little output"),
+    make_option(c("-c", "--count"), type="integer", default=5, 
+        help="Number of random normals to generate [default \\%default]",
+        metavar="number"),
+    make_option("--generator", default="rnorm", 
+        help = "Function to generate random deviates [default \"\\%default\"]"),
+    make_option("--mean", default=0, 
+        help="Mean if generator == \"rnorm\" [default \\%default]"),
+    make_option("--sd", default=1, metavar="standard deviation",
+        help="Standard deviation if generator == \"rnorm\" [default \\%default]")
+    )
+sort_list <- function(unsorted_list) {
+    for(ii in seq(along=unsorted_list)) {
+        if(is.list(unsorted_list[[ii]])) {
+            unsorted_list[[ii]] <- sort_list(unsorted_list[[ii]])
+        }
+    }
+    unsorted_list[sort(names(unsorted_list))] 
+}
+
 context("Testing make_option")
 test_that("make_option works as expected", {
     expect_equal(make_option("--integer", type="integer", default=5),
@@ -32,14 +56,6 @@ test_that("parse_args works as expected", {
             help="Print line number at the beginning of each line [default]")
         )
     parser <- OptionParser(usage = "\\%prog [options] file", option_list=option_list2)
-    sort_list <- function(unsorted_list) {
-        for(ii in seq(along=unsorted_list)) {
-            if(is.list(unsorted_list[[ii]])) {
-                unsorted_list[[ii]] <- sort_list(unsorted_list[[ii]])
-            }
-        }
-        unsorted_list[sort(names(unsorted_list))] 
-    }
     expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
                             args = c("--sd=3", "--quietly"))),
                 sort_list(list(sd = 3, verbose = FALSE, help = FALSE, 
@@ -66,8 +82,10 @@ test_that("parse_args works as expected", {
                 sort_list(list(options = list(add_numbers = FALSE, help = FALSE), 
                              args = c("-add_numbers", "example.txt"))))
     expect_that(parse_args(parser, args = c("-add_numbers", "example.txt")), throws_error())
+})
 
-    # test bug found by Juan Carlos Borrás
+# Bug found by Juan Carlos Borrás
+test_that("test bug of multiple '=' signs", {
     optlist <- list(
      make_option(c("-s", "--substitutions"), type="character",
     dest="substitutions", default=NULL,
@@ -79,8 +97,18 @@ test_that("parse_args works as expected", {
     opt <- parse_args(optparser, c("-s", "FOO=bar"))
     opt_alt <- parse_args(optparser, c("--substitutions=FOO=bar"))
     expect_that(opt, equals(opt_alt))
+})
 
-    # test bug found by Jim Nikelski about multiple short flag options "-abc" with positional_arguments = TRUE
+# Bug found by Jim Nikelski 
+test_that("test bug when multiple short flag options '-abc' with positional_arguments = TRUE", {
+    sort_list <- function(unsorted_list) {
+        for(ii in seq(along=unsorted_list)) {
+            if(is.list(unsorted_list[[ii]])) {
+                unsorted_list[[ii]] <- sort_list(unsorted_list[[ii]])
+            }
+        }
+        unsorted_list[sort(names(unsorted_list))] 
+    }
     expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
                         args = c("-qc", "10"), positional_arguments = TRUE)),
                 sort_list(list(options = list(sd = 1, help = FALSE, verbose = FALSE, 
@@ -101,4 +129,13 @@ test_that("parse_args works as expected", {
                 sort_list(list(options = list(sd = 1, help = FALSE, verbose = FALSE, 
                                 count = 10, mean = 0, generator = "rnorm"),
                             args = c("CMD", "--qcdefg", "--what-what", "bumblebee"))))
+})
+
+# Bug found by Ino de Brujin and Benjamin Tyner 
+test_that("test bug when long flag option with '=' with positional_arguments = TRUE", {
+    expect_equal(sort_list(parse_args(OptionParser(option_list = option_list), 
+                            args = c("--count=10"), positional_arguments = TRUE)),
+                sort_list(list(options = list(sd = 1, help = FALSE, verbose = TRUE, 
+                            count = 10, mean = 0, generator = "rnorm"),
+                            args=character(0))))
 })

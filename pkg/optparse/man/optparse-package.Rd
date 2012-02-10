@@ -55,10 +55,10 @@ argument, it is the subsequent option. short flags may be bundled together, shar
  \code{\link[getopt]{getopt}} 
 }
 \examples{
-    example_file <- system.file("doc", "example.Rscript", package = "optparse")
-    example_file_2 <- system.file("doc", "display_file.Rscript", package = "optparse")
+    example_file <- system.file("exec", "example.R", package = "optparse")
+    example_file_2 <- system.file("exec", "display_file.R", package = "optparse")
     \dontrun{
-        edit(file = example_file)
-        edit(file = example_file_2)
+        readLines( example_file)
+        readLines(example_file_2)
     }
 }

@@ -202,6 +202,9 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
 # Tells me whether a string is a valid option
 .is_option_string <- function(argument, object) {
     if(.is_long_flag(argument)) {
+        if(grepl("=", argument)) {
+            argument <- sub("(.*)=.*", "\\1", argument)
+        }
         return(argument %in% .get_long_options(object))
     } else if(.is_short_flag(argument)) {
         return(all(.expand_short_option(argument) %in% .get_short_options(object)))
