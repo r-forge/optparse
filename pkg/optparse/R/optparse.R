@@ -203,7 +203,7 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
 .is_option_string <- function(argument, object) {
     if(.is_long_flag(argument)) {
         if(grepl("=", argument)) {
-            argument <- sub("(.*)=.*", "\\1", argument)
+            argument <- sub("(.*?)=.*", "\\1", argument)
         }
         return(argument %in% .get_long_options(object))
     } else if(.is_short_flag(argument)) {

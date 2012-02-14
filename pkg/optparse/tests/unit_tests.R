@@ -36,21 +36,7 @@ test_that("make_option works as expected", {
 
 context("Testing parse_args")
 test_that("parse_args works as expected", {
-    option_list <- list( 
-        make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
-            help="Print extra output [default]"),
-        make_option(c("-q", "--quietly"), action="store_false", 
-            dest="verbose", help="Print little output"),
-        make_option(c("-c", "--count"), type="integer", default=5, 
-            help="Number of random normals to generate [default \\%default]",
-            metavar="number"),
-        make_option("--generator", default="rnorm", 
-            help = "Function to generate random deviates [default \"\\%default\"]"),
-        make_option("--mean", default=0, 
-            help="Mean if generator == \"rnorm\" [default \\%default]"),
-        make_option("--sd", default=1, metavar="standard deviation",
-            help="Standard deviation if generator == \"rnorm\" [default \\%default]")
-        )
+    # option_list took outside test_that
     option_list2 <- list( 
         make_option(c("-n", "--add_numbers"), action="store_true", default=FALSE,
             help="Print line number at the beginning of each line [default]")
@@ -96,6 +82,11 @@ test_that("test bug of multiple '=' signs", {
     optparser <- OptionParser(option_list=optlist)
     opt <- parse_args(optparser, c("-s", "FOO=bar"))
     opt_alt <- parse_args(optparser, c("--substitutions=FOO=bar"))
+    expect_that(opt, equals(opt_alt))
+
+    # also check when positional_arguments is set to true, like later bug unit test
+    opt <- parse_args(optparser, c("-s", "FOO=bar"), positional_arguments=TRUE)
+    opt_alt <- parse_args(optparser, c("--substitutions=FOO=bar"), positional_arguments=TRUE)
     expect_that(opt, equals(opt_alt))
 })
 
