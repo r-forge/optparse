@@ -132,7 +132,7 @@ opt = getopt(c(
 #help was asked for.
 if ( !is.null(opt$help) ) {
   #get the script name (only works when invoked with Rscript).
-  self = commandArgs()[1];
+  self = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
   #print a friendly message and exit with a non-zero error code
   cat(paste("Usage: ",self," [-[vh]] [-[-mean|m] <mean>] [-[-sd|s] <sd>] [-[-count|c] <count>]\n",sep=""));
   q(status=1);

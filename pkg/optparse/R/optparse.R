@@ -13,9 +13,7 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
                             add_help_option=TRUE, prog=NULL) {
     
     if(is.null(prog)) {
-        args <- commandArgs()
-        file_index <- grepl("--file=", args)
-        prog <- gsub("--file=", "", args[file_index])
+        prog = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
     }
     if( .Platform$OS.type == "windows") {
         prog <- gsub("\\\\", "\\\\\\\\", prog)
