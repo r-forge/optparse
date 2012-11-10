@@ -1,0 +1,5 @@
+getopt 1.18.1
+=============
+* Documentation highlights differences between `getopt` and `optparse`
+* Unit tests moved out of help file and into tests directory
+* Added a NEWS file
