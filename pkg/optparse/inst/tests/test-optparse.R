@@ -1,6 +1,3 @@
-library("testthat")
-library("optparse")
-
 option_list <- list( 
     make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
         help="Print extra output [default]"),
@@ -129,4 +126,14 @@ test_that("test bug when long flag option with '=' with positional_arguments = T
                 sort_list(list(options = list(sd = 1, help = FALSE, verbose = TRUE, 
                             count = 10, mean = 0, generator = "rnorm"),
                             args=character(0))))
+})
+
+context("print_help")
+test_that("description and epilogue work as expected", {
+    parser <- OptionParser()
+    expect_output(print_help(parser), "Usage:")
+    expect_output(print_help(parser), "Options:")
+    parser2 <- OptionParser(description="foo", epilogue="bar")
+    expect_output(print_help(parser2), "foo")
+    expect_output(print_help(parser2), "bar$")
 })
