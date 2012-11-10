@@ -1,0 +1,9 @@
+optparse 1.0.0
+==============
+* Added `description` and `epilogue` arguments to `OptionParser` to allow
+  users to add more information to generated help messages
+* No longer export S4 classes that represent OptionParser and OptionParserOption
+* Small bug fixes with automatically generated usage string
+* Documentation and unit tests made compatible with devtools
+* Added unit tests for `print_help` method
+
