@@ -133,7 +133,11 @@ test_that("description and epilogue work as expected", {
     parser <- OptionParser()
     expect_output(print_help(parser), "Usage:")
     expect_output(print_help(parser), "Options:")
-    parser2 <- OptionParser(description="foo", epilogue="bar")
+    parser2 <- OptionParser(usage="program", description="foo", epilogue="bar")
     expect_output(print_help(parser2), "foo")
     expect_output(print_help(parser2), "bar$")
+    expect_output(print_help(parser2), "^Usage: ")
+    expect_equal(stringr::str_count(
+                capture.output(print_help(OptionParser("usage: foo bar")))[1],
+                "[Uu]sage"), 1)
 })

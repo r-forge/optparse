@@ -12,7 +12,7 @@
   \item{object}{An \code{OptionParser} instance.}
 
   \item{args}{A character vector containing command line
-  options to be parsed. Default is everything after the
+  options to be parsed.  Default is everything after the
   Rscript program in the command line. If
   \code{positional_arguments} is \code{TRUE} then
   \code{parse_args} will only look for positional arguments
@@ -76,14 +76,10 @@ parse_args(parser, args = c("-add_numbers", "example.txt"), positional_arguments
 }
 \author{
   Trevor Davis.
-
-  The documentation for Python's optparse library, which
-  this package is based on, is Copyright 1990-2009, Python
-  Software Foundation.
 }
 \references{
-  Python's \code{optparse} library, which this package is
-  based on, is described here:
+  Python's \code{optparse} library, which inspired this
+  package, is described here:
   \url{http://docs.python.org/library/optparse.html}
 }
 \seealso{

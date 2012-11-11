@@ -94,8 +94,8 @@ make_option("--longflag")
   Trevor Davis.
 }
 \references{
-  Python's \code{optparse} library, which this package is
-  based on, is described here:
+  Python's \code{optparse} library, which inspires this
+  package, is described here:
   \url{http://docs.python.org/library/optparse.html}
 }
 \seealso{

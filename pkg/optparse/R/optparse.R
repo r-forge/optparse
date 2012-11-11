@@ -1,38 +1,14 @@
-#   The documentation for Python's optparse library, which this package 
-#   is based on, is Copyright 1990-2009, Python Software Foundation.
-
-## Class "OptionParser"
-## 
-##  A class designed to be used in conjunction with the function
-##  \code{parse_args} to parse command line options.
-##  
-##  @name OptionParser-class
-##  @docType class
-##  @section Slots: \describe{ 
-##      \item{list("usage")}{ A character string containing the Rscript program usage. }
-##      \item{:}{ A character string containing the Rscript program usage. }
-##      \item{list("options")}{ A list of \code{OptionParserOption} instances. }
-##      \item{:}{ A list of \code{OptionParserOption} instances. } 
-##      }
-##  @author Trevor Davis.
-##  
-##  The documentation for Python's optparse library, which this package is based
-##  on, is Copyright 1990-2009, Python Software Foundation.
-##  @seealso \code{\link{OptionParser}}
-##  @keywords classes
-##  @examples
-##  
-##  showClass("OptionParser")
 setClass("OptionParser", representation(usage = "character", options = "list", 
                 description="character", epilogue="character"))
 
-# setMethod("initialize", "OptionParser", function(.Object) {
-#     return(add_option(.Object, "-h", "--help", action="store_true", 
-#                         dest="help", default=FALSE, 
-#                         help="Show this help message and exit"))
-# })
-
-
+setClass("OptionParserOption", representation(short_flag="character", 
+                                    long_flag="character",
+                                    action="character",
+                                    type="character",
+                                    dest="character",
+                                    default="ANY",
+                                    help="character",
+                                    metavar="character"),)
 
 #' A function to create an instance of a parser object
 #'
@@ -41,8 +17,8 @@ setClass("OptionParser", representation(usage = "character", options = "list",
 #' methods is very useful for parsing options from the command line.
 #'
 #' @param usage The program usage message that will printed out if
-#' \code{parse_args} finds a help option, \code{\%prog} is substituted with the
-#' value of the \code{prog} argument.
+#'     \code{parse_args} finds a help option, \code{\%prog} is substituted with the
+#'     value of the \code{prog} argument.
 #' @param option_list A list of of \code{OptionParserOption} instances that will
 #'     define how \code{parse_args} reacts to command line options.
 #'     \code{OptionParserOption} instances are usually created by \code{make_option}
@@ -52,23 +28,20 @@ setClass("OptionParser", representation(usage = "character", options = "list",
 #'     added to the \code{OptionParser} instance.
 #' @param prog Program name to be substituted for \code{\%prog} in the usage
 #'     message, the default is to use the actual Rscript file name if called by an
+#'     Rscript file and otherwise keep \code{\%prog}.
 #' @param description  Additional text for \code{print_help} to print out between
 #'     usage statement and options statement
 #' @param epilogue  Additional text for \code{print_help} to print out after
 #'     the options statement
-#'Rscript file and otherwise keep \code{\%prog}.
-#'@return An instance of the \code{OptionParser} class.
-#'@author Trevor Davis.
+#' @return An instance of the \code{OptionParser} class.
+#' @author Trevor Davis.
 #'
-#'The documentation for Python's optparse library, which this package is based
-#'on, is Copyright 1990-2009, Python Software Foundation.
 #' @seealso \code{\link{parse_args}} \code{\link{make_option}}
 #'     \code{\link{add_option}}
-# \code{\linkS4class{OptionParser}}
-#'@references Python's \code{optparse} library, which this package is based on,
-#'is described here: \url{http://docs.python.org/library/optparse.html}
+#' @references Python's \code{optparse} library, which inspired this package,
+#'    is described here: \url{http://docs.python.org/library/optparse.html}
 #' @export 
-OptionParser <- function(usage = "Usage: %prog [options]", option_list=list(),
+OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
                             add_help_option=TRUE, prog=NULL, 
                             description="", epilogue="") {
     
@@ -81,7 +54,9 @@ OptionParser <- function(usage = "Usage: %prog [options]", option_list=list(),
     if(length(prog) && !is.na(prog)) {
         usage <- sub("%prog", prog, usage)
     }
-
+    # Match behavior of usage string in Python optparse package
+    usage <- sub("^usage: ", "Usage: ", usage)
+    usage <- ifelse(grepl("^Usage: ", usage), usage, sub("^", "Usage: ", usage))
     if(add_help_option) {
         option_list[[length(option_list) + 1]] <- 
             make_option(c("-h", "--help"),
@@ -94,74 +69,6 @@ OptionParser <- function(usage = "Usage: %prog [options]", option_list=list(),
 }
 
 
-# Class "OptionParserOption"
-# 
-# A class that defines how \code{optparse} should react to a given option it
-# finds on the command line.
-# 
-# 
-# @name OptionParserOption-class
-# @docType class
-# @section Slots: \describe{ \item{list("short_flag")}{A string of the desired
-# short flag comprised of the \dQuote{-} followed by a letter. }\item{:}{A
-# string of the desired short flag comprised of the \dQuote{-} followed by a
-# letter. } \item{list("long_flag")}{A string of the desired long flag
-# comprised of \dQuote{--} followed by a sequence of letters. }\item{:}{A
-# string of the desired long flag comprised of \dQuote{--} followed by a
-# sequence of letters. } \item{list("action")}{A character string that
-# describes the action \code{optparse} should take when it encounters an
-# option, either \dQuote{store}, \dQuote{store_true}, or \dQuote{store_false}.
-# }\item{:}{A character string that describes the action \code{optparse} should
-# take when it encounters an option, either \dQuote{store},
-# \dQuote{store_true}, or \dQuote{store_false}. } \item{list("type")}{A
-# character string that describes specifies which data type should be stored,
-# either \dQuote{logical}, \dQuote{integer}, \dQuote{double}, \dQuote{complex},
-# or dQuotecharacter }\item{:}{A character string that describes specifies
-# which data type should be stored, either \dQuote{logical}, \dQuote{integer},
-# \dQuote{double}, \dQuote{complex}, or dQuotecharacter } \item{list("dest")}{A
-# character string that specifies which list field \code{optparse} will store
-# option values. }\item{:}{A character string that specifies which list field
-# \code{optparse} will store option values. } \item{list("default")}{ The
-# default value \code{optparse} should use if it does not find the option on
-# the command line. }\item{:}{ The default value \code{optparse} should use if
-# it does not find the option on the command line. } \item{list("help")}{A
-# character string describing the option. }\item{:}{A character string
-# describing the option. } \item{list("metavar")}{A character string that
-# stands in for the option argument when printing help text. }\item{:}{A
-# character string that stands in for the option argument when printing help
-# text. } }
-# @author Trevor Davis.
-# 
-# The documentation for Python's optparse library, which this package is based
-# on, is Copyright 1990-2009, Python Software Foundation.
-# @seealso \code{\linkS4class{OptionParser}} relies on this class, use
-# \code{\link{make_option}} and \code{\link{add_option}} to create an instance
-# of this class.
-# @keywords classes
-# @examples
-# 
-# showClass("OptionParserOption")
-# 
-setClass("OptionParserOption", representation(short_flag="character", 
-                                    long_flag="character",
-                                    action="character",
-                                    type="character",
-                                    dest="character",
-                                    default="ANY",
-                                    help="character",
-                                    metavar="character"),)
-
-.convert_to_getopt <- function(object) {
-    short_flag <- sub("^-", "", object@short_flag)
-    long_flag <- sub("^--", "", object@long_flag)
-    if( object@action %in% c("store_true", "store_false") ) {
-        argument <- 0
-    } else {
-        argument <- 1
-    }
-    return( c( long_flag, short_flag, argument, object@type, object@help) )
-}
-
 
 #'Functions to enable our OptionParser to recognize specific command line
 #'options.
@@ -173,7 +80,6 @@ setClass("OptionParserOption", representation(short_flag="character",
 #'new \code{OptionParser} instance.
 #'
 #' @rdname add_make_option
-#' @aliases add_option make_option
 #' @param object An instance of the \code{OptionParser} class
 #' @param opt_str A character vector containing the string of the desired long
 #'       flag comprised of \dQuote{--} followed by a letter and then a sequence of
@@ -208,9 +114,7 @@ setClass("OptionParserOption", representation(short_flag="character",
 #' @author Trevor Davis.
 #' 
 #' @seealso \code{\link{parse_args}} \code{\link{OptionParser}}
-##     \code{\linkS4class{OptionParser}}
-##     \code{\linkS4class{OptionParserOption}} 
-#' @references Python's \code{optparse} library, which this package is based on,
+#' @references Python's \code{optparse} library, which inspires this package,
 #'     is described here: \url{http://docs.python.org/library/optparse.html}
 #' @examples
 #'
@@ -294,12 +198,9 @@ add_option <- function(object, opt_str, action="store", type=NULL,
 #'message.  It returns \code{invisible(NULL)}.
 #'@author Trevor Davis.
 #'
-#'The documentation for Python's optparse library, which this package is based
-#'on, is Copyright 1990-2009, Python Software Foundation.
 #'@seealso \code{{parse_args}} \code{{OptionParser}}
-## \code{\linkS4class{OptionParser}} 
-#'@references Python's \code{optparse} library, which this package is based on,
-#'is described here: \url{http://docs.python.org/library/optparse.html}
+#'@references Python's \code{optparse} library, which inspired this package,
+#'     is described here: \url{http://docs.python.org/library/optparse.html}
 #' @export
 print_help <- function(object) {
     cat(object@usage, fill = TRUE)
@@ -334,45 +235,40 @@ print_help <- function(object) {
     return(invisible(NULL))
 }
 
-
-
-#'Parse command line options.
+#' Parse command line options.
+#' 
+#' \code{parse_args} parses command line options using an \code{OptionParser}
+#' instance for guidance.
+#' 
+#' @param object An \code{OptionParser} instance.
+#' @param args A character vector containing command line options to be parsed.
+#'     Default is everything after the Rscript program in the command line. If
+#'     \code{positional_arguments} is \code{TRUE} then \code{parse_args} will only
+#'     look for positional arguments at the end of this vector.
+#' @param print_help_and_exit Whether \code{parse_args} should call
+#'     \code{print_help} to print out a usage message and exit the program.  Default
+#'     is \code{TRUE}.
+#' @param positional_arguments Whether \code{parse_args} should look for and
+#'     return a character vector of \emph{positional} arguments.  Default is
+#'     \code{FALSE}.
+#' @return Returns a list containing option values if
+#'     \code{positional_arguments} is \code{FALSE} (the default).  Otherwise returns
+#'     a list with field \code{options} containing our option values as well as
+#'     another field \code{args} which contains a vector of positional arguments.
+#' @section Acknowledgement: 
+#'     A big thanks to Steve Lianoglou for a bug report and patch;
+#'     Juan Carlos \enc{Borrás}{Borras} for a bug report; 
+#'     Jim Nikelski for a bug report and patch; 
+#'     Ino de Brujin and Benjamin Tyner for a bug report.
+#' @author Trevor Davis.
 #'
-#'\code{parse_args} parses command line options using an \code{OptionParser}
-#'instance for guidance.
-#'
-#'
-#'@param object An \code{OptionParser} instance.
-#'@param args A character vector containing command line options to be parsed.
-#'Default is everything after the Rscript program in the command line. If
-#'\code{positional_arguments} is \code{TRUE} then \code{parse_args} will only
-#'look for positional arguments at the end of this vector.
-#'@param print_help_and_exit Whether \code{parse_args} should call
-#'\code{print_help} to print out a usage message and exit the program.  Default
-#'is \code{TRUE}.
-#'@param positional_arguments Whether \code{parse_args} should look for and
-#'return a character vector of \emph{positional} arguments.  Default is
-#'\code{FALSE}.
-#'@return Returns a list containing option values if
-#'\code{positional_arguments} is \code{FALSE} (the default).  Otherwise returns
-#'a list with field \code{options} containing our option values as well as
-#'another field \code{args} which contains a vector of positional arguments.
-#'@section Acknowledgement: A big thanks to Steve Lianoglou for a bug report
-#'and patch; Juan Carlos \enc{Borrás}{Borras} for a bug report; Jim Nikelski for a bug report
-#'and patch; Ino de Brujin and Benjamin Tyner for a bug report.
-#'@author Trevor Davis.
-#'
-#'The documentation for Python's optparse library, which this package is based
-#'on, is Copyright 1990-2009, Python Software Foundation.
-#'@seealso \code{\link{OptionParser}} \code{\link{print_help}}
-## \code{\linkS4class{OptionParser}} 
-#'@references Python's \code{optparse} library, which this package is based on,
-#'is described here: \url{http://docs.python.org/library/optparse.html}
+#' @seealso \code{\link{OptionParser}} \code{\link{print_help}}
+#' @references Python's \code{optparse} library, which inspired this package,
+#'      is described here: \url{http://docs.python.org/library/optparse.html}
 #' @encoding latin1
-#'@examples
-#'
-#'# example from vignette
-#'option_list <- list( 
+#' @examples
+#' # example from vignette
+#' option_list <- list( 
 #'    make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
 #'        help="Print extra output [default]"),
 #'    make_option(c("-q", "--quietly"), action="store_false", 
@@ -401,7 +297,7 @@ print_help <- function(object) {
 #'parse_args(parser, args = c("-add_numbers", "example.txt"), positional_arguments = TRUE)
 #'
 #' @import getopt
-#' @export parse_args
+#' @export 
 parse_args <- function(object, args = commandArgs(trailingOnly = TRUE), 
                     print_help_and_exit = TRUE, positional_arguments = FALSE) {
     n_options <- length( object@options )
@@ -519,7 +415,8 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
     }
     return(short_options)
 }
-# .expand_short_option("-cde") = c("-c", "-d", "-e"), based on function by Jim Nikelski
+# .expand_short_option("-cde") = c("-c", "-d", "-e")
+# based on function by Jim Nikelski
 .expand_short_option <- function(argument) {
     if(nchar(argument) == 2) {
         return(argument)
@@ -547,3 +444,16 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
     }
     return(list(option_strings = option_strings, n_arguments = n_arguments))
 }
+
+# Converts our representation of options to format getopt can understand
+.convert_to_getopt <- function(object) {
+    short_flag <- sub("^-", "", object@short_flag)
+    long_flag <- sub("^--", "", object@long_flag)
+    if( object@action %in% c("store_true", "store_false") ) {
+        argument <- 0
+    } else {
+        argument <- 1
+    }
+    return( c( long_flag, short_flag, argument, object@type, object@help) )
+}
+

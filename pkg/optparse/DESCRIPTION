@@ -2,9 +2,10 @@ Package: optparse
 Type: Package
 Title: Command line option parser.
 Version: 1.0.0
-Author: Trevor Davis. Some documentation and unit tests ported from Allen Day's
-    ``getopt`` package. Inspired by the optparse Python library by the Python
-    Software Foundation. Contributions from Steve Lianoglou and Jim Nikelski.
+Author: Trevor Davis.
+    Some documentation and examples ported from Allen Day's ``getopt`` package.
+    Inspired by the optparse Python module by the Python Software Foundation.
+    Contributions from Steve Lianoglou and Jim Nikelski.
 Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
 Description: A command line parser inspired by Python's ``optparse`` libary to
     be used with Rscript to write "#!" shebang scripts that accept short and
@@ -17,7 +18,8 @@ Depends:
     methods,
     getopt (>= 1.17)
 Suggests:
-    testthat
+    testthat,
+    stringr
 Collate:
     'optparse-package.R'
     'optparse.R'

@@ -18,14 +18,10 @@
 }
 \author{
   Trevor Davis.
-
-  The documentation for Python's optparse library, which
-  this package is based on, is Copyright 1990-2009, Python
-  Software Foundation.
 }
 \references{
-  Python's \code{optparse} library, which this package is
-  based on, is described here:
+  Python's \code{optparse} library, which inspired this
+  package, is described here:
   \url{http://docs.python.org/library/optparse.html}
 }
 \seealso{

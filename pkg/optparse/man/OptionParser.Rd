@@ -2,7 +2,7 @@
 \alias{OptionParser}
 \title{A function to create an instance of a parser object}
 \usage{
-  OptionParser(usage = "Usage: \%prog [options]",
+  OptionParser(usage = "usage: \%prog [options]",
     option_list = list(), add_help_option = TRUE,
     prog = NULL, description = "", epilogue = "")
 }
@@ -25,15 +25,15 @@
 
   \item{prog}{Program name to be substituted for
   \code{\%prog} in the usage message, the default is to use
-  the actual Rscript file name if called by an}
+  the actual Rscript file name if called by an Rscript file
+  and otherwise keep \code{\%prog}.}
 
   \item{description}{Additional text for \code{print_help}
   to print out between usage statement and options
   statement}
 
   \item{epilogue}{Additional text for \code{print_help} to
-  print out after the options statement Rscript file and
-  otherwise keep \code{\%prog}.}
+  print out after the options statement}
 }
 \value{
   An instance of the \code{OptionParser} class.
@@ -46,14 +46,10 @@
 }
 \author{
   Trevor Davis.
-
-  The documentation for Python's optparse library, which
-  this package is based on, is Copyright 1990-2009, Python
-  Software Foundation.
 }
 \references{
-  Python's \code{optparse} library, which this package is
-  based on, is described here:
+  Python's \code{optparse} library, which inspired this
+  package, is described here:
   \url{http://docs.python.org/library/optparse.html}
 }
 \seealso{
