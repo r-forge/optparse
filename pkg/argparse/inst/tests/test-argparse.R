@@ -12,7 +12,8 @@ test_that("print_help works as expected", {
 })
 context("convert_..._to_arguments")
 test_that("convert_..._to_arguments works as expected", {
-    c.2a <- convert_..._to_arguments
+    # test in mode "add_argument"
+    c.2a <- function(...) { convert_..._to_arguments("add_argument", ...) }
     waz <- "wazzup"
     expect_equal(c.2a(foo="bar", hello="world"), "foo='bar', hello='world'")
     expect_equal(c.2a(foo="bar", waz), "foo='bar', 'wazzup'")
@@ -20,6 +21,12 @@ test_that("convert_..._to_arguments works as expected", {
     expect_equal(c.2a(default=TRUE), "default=True")
     expect_equal(c.2a(default=3.4), "default=3.4")
     expect_equal(c.2a(default="foo"), "default='foo'")
+    # test in mode "ArgumentParser"
+    c.2a <- function(...) { convert_..._to_arguments("ArgumentParser", ...) }
+    expect_match(c.2a(argument_default=FALSE), "argument_default=False")
+    expect_match(c.2a(argument_default=30), "argument_default=30")
+    expect_match(c.2a(argument_default="foobar"), "argument_default='foobar'")
+    expect_match(c.2a(foo="bar"), "^prog='PROGRAM'|^prog='test-argparse.R'")
 })
 
 context("add_argument")
@@ -30,8 +37,21 @@ test_that("add_argument works as expected", {
     parser$add_argument('--sum', dest='accumulate', action='store_const',
                        const='sum', default='max',
                        help='sum the integers (default: find the max)')
+    arguments <- parser$parse_args(c("--sum", "1", "2"))
+    f <- get(arguments$accumulate)
     expect_output(parser$print_help(), "sum the integers")
-    expect_equal(parser$parse_args(c("--sum", "1", "2"))$accumulate, "sum")
-    expect_equal(parser$parse_args(c("--sum", "1", "2"))$integers, c(1,2))
+    expect_equal(arguments$accumulate, "sum")
+    expect_equal(arguments$integers, c(1,2))
+    expect_equal(f(arguments$integers), 3)
     expect_error(parser$add_argument("--foo", type="boolean"))
+})
+
+context("ArgumentParser")
+test_that("ArgumentParser works as expected", {
+    parser <- ArgumentParser(prog="foobar", usage="%(prog)s arg1 arg2")
+    parser$add_argument('--hello', dest='saying', action='store_const',
+            const='hello', default='bye', 
+            help="%(prog)s's saying (default: %(default)s)")
+    expect_output(parser$print_help(), "foobar arg1 arg2")
+    expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
 })

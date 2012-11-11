@@ -11,12 +11,27 @@
 #' @import rjson
 #' @import proto
 #' @export
+#' @examples
+#'
+#' parser <- ArgumentParser(description='Process some integers')
+#' parser$add_argument('integers', metavar='N', type="integer", nargs='+',
+#'                    help='an integer for the accumulator')
+#' parser$add_argument('--sum', dest='accumulate', action='store_const',
+#'                    const='sum', default='max',
+#'                    help='sum the integers (default: find the max)')
+#' parser$print_help()
+#' # default args for ArgumentParser()$parse_args are commandArgs(TRUE)
+#' # which is what you'd want for an Rscript but not for interactive use
+#' args <- parser$parse_args(c("--sum", "1", "2", "3")) 
+#' accumulate_fn <- get(args$accumulate)
+#' print(accumulate_fn(args$integers))
 ArgumentParser <- function(..., 
         python_cmd=getOption("python_cmd", 
                 ifelse(.Platform$OS.type == "windows", "python.exe", "python"))) {
     python_code = c("import argparse, json",
     "",
-    sprintf("parser = argparse.ArgumentParser(%s)", convert_..._to_arguments(...)),
+    sprintf("parser = argparse.ArgumentParser(%s)", 
+            convert_..._to_arguments("ArgumentParser", ...)),
     "")
     proto(expr = {
         python_code = python_code
@@ -46,19 +61,22 @@ ArgumentParser <- function(...,
         add_argument = function(., ...) {
             .$python_code <- c(.$python_code,
                     sprintf("parser.add_argument(%s)",
-                            convert_..._to_arguments(...)))
+                            convert_..._to_arguments("add_argument", ...)))
             return(invisible(NULL))
         }
     })
 }
 
-convert_..._to_arguments <- function(...) {
+# @param mode Either "add_argument" or "ArgumentParser"
+convert_..._to_arguments <- function(mode, ...) {
+
     argument_list <- list(...)
     argument_names <- names(argument_list)
     equals <- ifelse(argument_names == "", "", "=")
     arguments <- shQuote(as.character(argument_list))
     proposed_arguments <- paste(argument_names, equals, arguments, sep="")
-    if(any(grepl("type=", proposed_arguments))) {
+    # Make sure types are what Python wants
+    if(mode == "add_argument" && any(grepl("type=", proposed_arguments))) {
         ii <- grep("type=", proposed_arguments)
         type <- argument_list[[ii]]
         python_type <- switch(type,
@@ -72,12 +90,27 @@ convert_..._to_arguments <- function(...) {
         proposed_arguments[ii] <- sprintf("type=%s", python_type)
                                  
     }
-    if(any(grepl("default=", proposed_arguments))) {
-        ii <- grep("default=", proposed_arguments)
+    # Make defaults are what Python wants, if specified
+    default_string <- switch(mode,
+           add_argument = "default=", 
+           ArgumentParser = "argument_default=",
+           stop(sprintf("Unknown mode %s", mode)))
+    if(any(grepl(default_string, proposed_arguments))) {
+        ii <- grep(default_string, proposed_arguments)
         default <- argument_list[[ii]]
         if(is.character(default)) default <- shQuote(default) 
         if(is.logical(default)) default <- ifelse(default, 'True', 'False') 
-        proposed_arguments[ii] <- sprintf("default=%s", default)
+        proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
+    }
+    # Set right default prog name if not specified, if possible
+    # Do last to not screw up other fixes with prog insertion
+    if(mode == "ArgumentParser" && all(!grepl("prog=", proposed_arguments))) {
+        prog = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
+        if( .Platform$OS.type == "windows") { 
+            prog <- gsub("\\\\", "\\\\\\\\", prog)
+        }
+        if(is.na(prog)) prog <- "PROGRAM"
+        proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse=", "))
 }

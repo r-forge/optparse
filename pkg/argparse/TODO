@@ -1,4 +1,4 @@
-* use the right prog
-* add ArgumentParser / add_argument switch control convert_..._to_arguments
-* Create clean default function
+* Add vignette
+* Add examples
+* Improve documentation
 
