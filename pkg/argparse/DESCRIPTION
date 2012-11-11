@@ -2,15 +2,19 @@ Package: argparse
 Type: Package
 Title: Command line optional and positional argument parser.
 Version: 0.1.0
-Date: 2011-04-23
-Author: Trevor Davis. 
-    Based on the argparse Python library documentation by Steven Bethard.
+Author: Trevor Davis.
 Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
-Description:  A command line parser inspired by Python's ``argparse`` libary to be used with Rscript
-     to write "#!" shebang scripts that accept short and long flag/options.
+Description: A command line parser that wraps Python's ``argparse`` libary to
+    be used with Rscript to write "#!" shebang scripts that accept short and
+    long flag/options.
 License: GPL (>= 2)
 URL: http://r-forge.r-project.org/projects/optparse
 LazyLoad: yes
-Depends: proto
+Depends:
+    proto,
+    rjson
 SystemRequirement: python (>= 2.7)
-Suggests: testthat
+Suggests:
+    testthat
+Collate:
+    'argparse.R'
