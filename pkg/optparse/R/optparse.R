@@ -416,7 +416,8 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
     return(short_options)
 }
 # .expand_short_option("-cde") = c("-c", "-d", "-e")
-# based on function by Jim Nikelski
+# Based on function by Jim Nikelski
+# He gave me a non-exclusive unlimited license to use his code
 .expand_short_option <- function(argument) {
     if(nchar(argument) == 2) {
         return(argument)
