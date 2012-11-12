@@ -1,10 +1,10 @@
 Package: getopt
 Type: Package
 Title: C-like getopt behavior.
-Version: 1.18.1
+Version: 1.19.0
 Author: Allen Day
-    Contributions from Trevor Davis 
-Maintainer: Trevor Davis <trevor.l.davis@stanford.edu>
+    Contributions from Trevor L Davis
+Maintainer: Trevor L Davis <trevor.l.davis@stanford.edu>
 Description: Package designed to be used with Rscript to write
     ``#!'' shebang scripts that accept short and long flags/options.
     Many users will prefer using instead the package optparse

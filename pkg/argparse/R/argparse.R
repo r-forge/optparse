@@ -67,6 +67,7 @@ ArgumentParser <- function(..., python_cmd=getOption("python_cmd", "python")) {
 }
 
 # @param mode Either "add_argument" or "ArgumentParser"
+#' @import getopt
 convert_..._to_arguments <- function(mode, ...) {
 
     argument_list <- list(...)
@@ -104,10 +105,7 @@ convert_..._to_arguments <- function(mode, ...) {
     # Set right default prog name if not specified, if possible
     # Do last to not screw up other fixes with prog insertion
     if(mode == "ArgumentParser" && all(!grepl("prog=", proposed_arguments))) {
-        prog = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
-        if( .Platform$OS.type == "windows") { 
-            prog <- gsub("\\\\", "\\\\\\\\", prog)
-        }
+        prog <- get_Rscript_filename()
         if(is.na(prog)) prog <- "PROGRAM"
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }

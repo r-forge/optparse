@@ -33,10 +33,14 @@
 #' sharing a single leading ``-'', but only the final \emph{short flag} is able
 #' to have a corresponding \emph{argument}.
 #'
+#' Many users wonder whether they should use the getopt package or optparse package
+#' Here is some of the major differences:
+#'
 #' Features available in \code{getopt} unavailable in \code{optparse}
 #'
-#' 1. \code{optparse} does not allow one to use \code{getopt} "optional argument"
-#' forcing users to choose between "no argument" or "required argument" for their options
+#' 1. As well as allowing one to specify options that take either
+#'      no argument or a required argument,
+#'    \code{getopt} also allows one to specify option with an optional argument.
 #' 
 #' Some features implemented in \code{optparse} package unavailable in \code{getopt}
 #'
@@ -45,7 +49,13 @@
 #'
 #' 2. Automatic generation of an help option and printing of help text when encounters an "-h"
 #' 
-#' 3. Option to specify default arguments for options as well name of variable to store option values
+#' 3. Option to specify default arguments for options as well the
+#'    variable name to store option values
+#'
+#' There is also new package \code{argparse} which contains all the features
+#' of both getopt and optparse but which has a dependency on Python (>= 2.7)
+#' and has not been used in production for a few years 
+#' like the getopt and optparse packages.
 #'
 #' Some Features unlikely to be implemented in \code{getopt}:
 #' 
@@ -119,20 +129,19 @@
 #' library('getopt');
 #' #get options, using the spec as defined by the enclosed list.
 #' #we read the options from the default: commandArgs(TRUE).
-#' opt = getopt(c(
+#' spec = matrix(c(
 #'   'verbose', 'v', 2, "integer",
 #'   'help'   , 'h', 0, "logical",
 #'   'count'  , 'c', 1, "integer",
 #'   'mean'   , 'm', 1, "double",
 #'   'sd'     , 's', 1, "double"
-#' ));
+#' ), byrow=TRUE, ncol=4);
+#' opt = getopt(spec);
 #' 
-#' #help was asked for.
+#' # if help was asked for print a friendly message 
+#' # and exit with a non-zero error code
 #' if ( !is.null(opt$help) ) {
-#'   #get the script name (only works when invoked with Rscript).
-#'   self = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
-#'   #print a friendly message and exit with a non-zero error code
-#'   cat(paste("Usage: ",self," [-[vh]] [-[-mean|m] <mean>] [-[-sd|s] <sd>] [-[-count|c] <count>]\n",sep=""));
+#'   cat(getopt(spec, usage=TRUE));
 #'   q(status=1);
 #' }
 #' 
@@ -152,7 +161,7 @@
 #' 
 #' #signal success and exit.
 #' #q(status=0);
-getopt = function (spec=NULL,opt=commandArgs(TRUE),command=strsplit(commandArgs(FALSE)[4],"=")[[1]][2],usage=FALSE,debug=FALSE) {
+getopt = function (spec=NULL,opt=commandArgs(TRUE),command=get_Rscript_filename(),usage=FALSE,debug=FALSE) {
 
   # littler compatibility - map argv vector to opt
   if (exists("argv", where = .GlobalEnv, inherits = FALSE)) {
@@ -402,7 +411,9 @@ getopt = function (spec=NULL,opt=commandArgs(TRUE),command=strsplit(commandArgs(
   	    storage.mode(x) = spec[current.flag, col.mode];
             result[spec[current.flag, col.long.name]] = x;
           } else {
-            stop("this should never happen (1).  please inform the author.");
+            stop(paste("This should never happen.",
+              "Is your spec argument correct?  Maybe you forgot to set",
+              "ncol=4, byrow=TRUE in your matrix call?"));
 	  }
         }
       #trailing flag without required argument
@@ -430,4 +441,20 @@ getopt = function (spec=NULL,opt=commandArgs(TRUE),command=strsplit(commandArgs(
     i = i+1;
   }
   return(result);
+}
+
+#' Returns file name of calling Rscript
+#'
+#' Returns the file name of the calling Rscript. 
+#' @return A string with the filename of the calling script.
+#'      If not found (i.e. you are in a interactive session) returns NA.
+#'
+#' \code{get_Rscript_filename} returns the file 
+#' @export
+get_Rscript_filename <- function() {
+    prog <- sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
+    if( .Platform$OS.type == "windows") { 
+        prog <- gsub("\\\\", "\\\\\\\\", prog)
+    }
+    prog
 }
