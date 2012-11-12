@@ -5,4 +5,7 @@ optparse 1.0.0
 * Slightly alters the generated usage string 
   to match more closely what the Python module does
 * No longer exports S4 classes that represent OptionParser and OptionParserOption
+* Now requires package getopt (>= 1.19) which has also been moved to 
+  Imports field from Depends field in DESCRIPTION
+* Now also Suggests stringr package in DESCRIPTION
 

@@ -1,3 +1,10 @@
+# .expand_short_option based on function by Jim Nikelski (c) 2011
+# He explicitly gave me a non-exclusive unlimited license to his patch
+
+# Incorporates some patches by Steve Lianoglou (c) 2010
+# He explicitly gave me a non-exclusive unlimited license to code in his patches
+
+#' @import methods
 setClass("OptionParser", representation(usage = "character", options = "list", 
                 description="character", epilogue="character"))
 
@@ -40,16 +47,14 @@ setClass("OptionParserOption", representation(short_flag="character",
 #'     \code{\link{add_option}}
 #' @references Python's \code{optparse} library, which inspired this package,
 #'    is described here: \url{http://docs.python.org/library/optparse.html}
+#' @import getopt
 #' @export 
 OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
                             add_help_option=TRUE, prog=NULL, 
                             description="", epilogue="") {
     
     if(is.null(prog)) {
-        prog = sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
-    }
-    if( .Platform$OS.type == "windows") {
-        prog <- gsub("\\\\", "\\\\\\\\", prog)
+        prog <- get_Rscript_filename()
     }
     if(length(prog) && !is.na(prog)) {
         usage <- sub("%prog", prog, usage)
@@ -415,9 +420,9 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
     }
     return(short_options)
 }
+# .expand_short_option based on function by Jim Nikelski (c) 2011
+# He gave me a non-exclusive unlimited license to this code
 # .expand_short_option("-cde") = c("-c", "-d", "-e")
-# Based on function by Jim Nikelski
-# He gave me a non-exclusive unlimited license to use his code
 .expand_short_option <- function(argument) {
     if(nchar(argument) == 2) {
         return(argument)
