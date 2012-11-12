@@ -3,7 +3,7 @@
 \title{Create a command line parser}
 \usage{
   ArgumentParser(...,
-    python_cmd = getOption("python_cmd", ifelse(.Platform$OS.type == "windows", "python.exe", "python")))
+    python_cmd = getOption("python_cmd", "python"))
 }
 \arguments{
   \item{...}{Arguments cleaned and passed to Pythons

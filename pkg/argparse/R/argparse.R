@@ -25,9 +25,8 @@
 #' args <- parser$parse_args(c("--sum", "1", "2", "3")) 
 #' accumulate_fn <- get(args$accumulate)
 #' print(accumulate_fn(args$integers))
-ArgumentParser <- function(..., 
-        python_cmd=getOption("python_cmd", 
-                ifelse(.Platform$OS.type == "windows", "python.exe", "python"))) {
+## ifelse(.Platform$OS.type == "windows", "python.exe", "python")
+ArgumentParser <- function(..., python_cmd=getOption("python_cmd", "python")) {
     python_code = c("import argparse, json",
     "",
     sprintf("parser = argparse.ArgumentParser(%s)", 
