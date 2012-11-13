@@ -7,10 +7,9 @@
 \value{
   A string with the filename of the calling script.  If not
   found (i.e. you are in a interactive session) returns NA.
-
-  \code{get_Rscript_filename} returns the file
 }
 \description{
-  Returns the file name of the calling Rscript.
+  \code{get_Rscript_filename} returns the file name of
+  calling Rscript
 }
 

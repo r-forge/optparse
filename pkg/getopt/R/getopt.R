@@ -445,11 +445,10 @@ getopt = function (spec=NULL,opt=commandArgs(TRUE),command=get_Rscript_filename(
 
 #' Returns file name of calling Rscript
 #'
-#' Returns the file name of the calling Rscript. 
+#' \code{get_Rscript_filename} returns the file name of calling Rscript 
 #' @return A string with the filename of the calling script.
 #'      If not found (i.e. you are in a interactive session) returns NA.
 #'
-#' \code{get_Rscript_filename} returns the file 
 #' @export
 get_Rscript_filename <- function() {
     prog <- sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
