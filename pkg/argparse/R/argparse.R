@@ -6,7 +6,16 @@
 #' @param ... Arguments cleaned and passed to Pythons argparse.ArgumentParser()
 #' @param python_cmd The python executable for \code{argparse} to use.
 #'      Must have argparse and json modules (i.e. Python (>= 2.7)).  
-#'      Default is \code{python.exe} on Windows else \code{python}
+#'      Default is \code{python}
+#' @return  \code{ArgumentParser} returns a parser object which contains
+#'    an \code{add_argument} function to add arguments to the parser,
+#'    a \code{parse_args} function to parse command line arguments into
+#'    a list, a \code{print_help} and \code{print_usage} function to print
+#'    usage information.  See code examples, package vignette, 
+#'    and corresponding python module for more information on how to use it.
+#'    
+#' @references Python's \code{argparse} library, which this package is based on,
+#'  is described here: \url{http://docs.python.org/library/argparse.html}
 #'      
 #' @import rjson
 #' @import proto
