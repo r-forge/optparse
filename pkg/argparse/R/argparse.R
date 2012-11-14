@@ -39,7 +39,8 @@ ArgumentParser <- function(..., python_cmd=getOption("python_cmd", "python")) {
                     sprintf("args = parser.parse_args([%s])",
                             paste(sprintf("'%s'", args), collapse=", ")),
                     "print(json.dumps(args.__dict__, sort_keys=True))")
-            output <- system(python_cmd, input=python_code, intern=TRUE)   
+            output <- suppressWarnings(system(paste(python_cmd, "2>&1"),
+                        input=python_code, intern=TRUE))
             if(grepl("^usage:", output[1])) {
                 cat(output, sep="\n")
                 quit(status=1)
@@ -89,6 +90,17 @@ convert_..._to_arguments <- function(mode, ...) {
                         "'logical', 'integer', 'double' or 'character'")))
         proposed_arguments[ii] <- sprintf("type=%s", python_type)
                                  
+    }
+    # make sure nargs are what python wants
+    if(mode == "add_argument" && any(grepl("nargs=", proposed_arguments))) {
+        ii <- grep("nargs=", proposed_arguments)
+        nargs <- argument_list[[ii]]
+        if(is.numeric(nargs)) {
+            nargs <- as.character(nargs)
+        } else {
+            nargs <- shQuote(nargs)
+        }
+        proposed_arguments[ii] <- sprintf("nargs=%s", nargs)
     }
     # Make defaults are what Python wants, if specified
     default_string <- switch(mode,
