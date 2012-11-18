@@ -35,7 +35,7 @@
 #' accumulate_fn <- get(args$accumulate)
 #' print(accumulate_fn(args$integers))
 ## ifelse(.Platform$OS.type == "windows", "python.exe", "python")
-ArgumentParser <- function(..., python_cmd=getOption("python_cmd", "python")) {
+ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_cmd())) {
     python_code = c("import argparse, json",
     "",
     sprintf("parser = argparse.ArgumentParser(%s)", 
@@ -131,4 +131,35 @@ convert_..._to_arguments <- function(mode, ...) {
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse=", "))
+}
+
+is_python <- function(path) {
+    tryCatch({
+            system(path, intern=TRUE, input="import argparse, json", ignore.stderr=TRUE)
+            TRUE
+        }, 
+        warning = function(w) { 
+            warning(paste(sprintf("%s", path),
+                        "does not seem to have the argparse and/or json module"))
+            FALSE
+        },
+        error = function(e) {
+            FALSE
+        })
+}
+is_python_vec <- Vectorize(is_python)
+
+find_python_cmd <- function() {
+    python_cmds <- c("python", "python3", "python2", "pypy", "C:/Python27/python", 
+            "C:/Python33/python")
+    is_pythons <- is_python_vec(python_cmds)
+    python_cmd <- python_cmds[which(is_pythons)][1]
+    if(is.na(python_cmd)) {
+        warning(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
+                       "nor in a couple common Windows locations.\n",
+                       "Please either install Python, add it to the PATH, or set",
+                        'options("python_cmd") to the path of its current location'))
+
+    }
+    return(python_cmd)
 }
