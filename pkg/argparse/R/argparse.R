@@ -36,6 +36,10 @@
 #' print(accumulate_fn(args$integers))
 ## ifelse(.Platform$OS.type == "windows", "python.exe", "python")
 ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_cmd())) {
+    if(!is_python(python_cmd)) {
+        stop(paste(sprintf("python executable %s either is not installed,", python_cmd), 
+                "is not on the path, or does not have argparse, json modules"))
+    }
     python_code = c("import argparse, json",
     "",
     sprintf("parser = argparse.ArgumentParser(%s)", 
@@ -161,10 +165,10 @@ find_python_cmd <- function() {
     is_pythons <- is_python_vec(python_cmds)
     python_cmd <- python_cmds[which(is_pythons)][1]
     if(is.na(python_cmd)) {
-        warning(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
+        stop(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
                        "nor in a couple common Windows locations.\n",
-                       "Please either install Python, add it to the PATH, or set",
-                        'options("python_cmd") to the path of its current location'))
+                       "Please either install Python, add it to the PATH, and/or set",
+                        "the ``python_cmd`` option to the path of its current location"))
 
     }
     return(python_cmd)

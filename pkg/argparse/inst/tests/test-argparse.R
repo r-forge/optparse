@@ -54,4 +54,5 @@ test_that("ArgumentParser works as expected", {
             help="%(prog)s's saying (default: %(default)s)")
     expect_output(parser$print_help(), "foobar arg1 arg2")
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
+    expect_error(ArgumentParser(python_cmd="foobar"))
 })
