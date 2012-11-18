@@ -48,13 +48,14 @@ ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_c
                     sprintf("args = parser.parse_args([%s])",
                             paste(sprintf("'%s'", args), collapse=", ")),
                     "print(json.dumps(args.__dict__, sort_keys=True))")
-            if(.Platform$OS.type == "unix") {
-                output <- suppressWarnings(system(paste(python_cmd, "2>&1"),
-                            input=python_code, intern=TRUE))
-            } else {
-                output <- suppressWarnings(system(paste(python_cmd),
-                        input=python_code, intern=TRUE))
-            }
+            # if(.Platform$OS.type == "unix") {
+            #     output <- suppressWarnings(system(paste(python_cmd, "2>&1"),
+            #                 input=python_code, intern=TRUE))
+            # } else {
+            #     output <- suppressWarnings(system(paste(python_cmd),
+            #             input=python_code, intern=TRUE))
+            output <- suppressWarnings(system2(python_cmd,
+                        input=python_code, stdout=TRUE, stderr=TRUE))
             if(grepl("^usage:", output[1])) {
                 cat(output, sep="\n")
                 quit(status=1)
