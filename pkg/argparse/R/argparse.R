@@ -83,7 +83,7 @@ convert_..._to_arguments <- function(mode, ...) {
     argument_list <- list(...)
     argument_names <- names(argument_list)
     equals <- ifelse(argument_names == "", "", "=")
-    arguments <- shQuote(as.character(argument_list))
+    arguments <- shQuote(as.character(argument_list), type="sh")
     proposed_arguments <- paste(argument_names, equals, arguments, sep="")
     # Make sure types are what Python wants
     if(mode == "add_argument" && any(grepl("type=", proposed_arguments))) {
@@ -107,7 +107,7 @@ convert_..._to_arguments <- function(mode, ...) {
         if(is.numeric(nargs)) {
             nargs <- as.character(nargs)
         } else {
-            nargs <- shQuote(nargs)
+            nargs <- shQuote(nargs, type="sh")
         }
         proposed_arguments[ii] <- sprintf("nargs=%s", nargs)
     }
@@ -119,7 +119,7 @@ convert_..._to_arguments <- function(mode, ...) {
     if(any(grepl(default_string, proposed_arguments))) {
         ii <- grep(default_string, proposed_arguments)
         default <- argument_list[[ii]]
-        if(is.character(default)) default <- shQuote(default) 
+        if(is.character(default)) default <- shQuote(default, type="sh") 
         if(is.logical(default)) default <- ifelse(default, 'True', 'False') 
         proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
     }
