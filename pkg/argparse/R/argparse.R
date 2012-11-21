@@ -143,6 +143,7 @@ convert_..._to_arguments <- function(mode, ...) {
     return(paste(proposed_arguments, collapse=", "))
 }
 
+# Tests whether the python command can be used with argparse package
 is_python <- function(path) {
     tryCatch({
             system(path, intern=TRUE, input="import argparse, json", ignore.stderr=TRUE)
@@ -159,6 +160,7 @@ is_python <- function(path) {
 }
 is_python_vec <- Vectorize(is_python)
 
+# Find a suitable python cmd or give error if not possible
 find_python_cmd <- function() {
     python_cmds <- c("python", "python3", "python2", "pypy", "C:/Python27/python", 
             "C:/Python33/python")
