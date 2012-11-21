@@ -73,8 +73,6 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
                     description=description, epilogue=epilogue))
 }
 
-
-
 #'Functions to enable our OptionParser to recognize specific command line
 #'options.
 #'
