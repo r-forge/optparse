@@ -280,6 +280,7 @@ getopt = function (spec=NULL,opt=commandArgs(TRUE),command=get_Rscript_filename(
       if ( length(rowmatch) == 0 ) {
         stop(paste('long flag "', this.flag, '" is invalid', sep=''));
 
+      #### check if there is an exact match and use that
       #long flag is ambiguous, matches too many options
       } else if ( length(rowmatch) > 1 ) {
         stop(paste('long flag "', this.flag, '" is ambiguous', sep=''));

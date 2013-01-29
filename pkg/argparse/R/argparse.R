@@ -38,9 +38,14 @@
 ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_cmd())) {
     if(!is_python(python_cmd)) {
         stop(paste(sprintf("python executable %s either is not installed,", python_cmd), 
-                "is not on the path, or does not have argparse, json modules"))
+                "is not on the path, or does not have argparse, json modules",
+                "please see INSTALL file"))
     }
-    python_code = c("import argparse, json",
+    python_code = c("import argparse",
+    "try:",
+    "    import json",
+    "except ImportError:",
+    "    import simplejson as json", 
     "",
     sprintf("parser = argparse.ArgumentParser(%s)", 
             convert_..._to_arguments("ArgumentParser", ...)),
@@ -158,19 +163,26 @@ is_python <- function(path) {
             FALSE
         })
 }
-is_python_vec <- Vectorize(is_python)
+# is_python_vec <- Vectorize(is_python)
 
 # Find a suitable python cmd or give error if not possible
 find_python_cmd <- function() {
-    python_cmds <- c("python", "python3", "python2", "pypy", "C:/Python27/python", 
-            "C:/Python33/python")
-    is_pythons <- is_python_vec(python_cmds)
-    python_cmd <- python_cmds[which(is_pythons)][1]
+    python_cmds <- c("python", "python3", "python2", "pypy",
+            sprintf("C:/Python%s/python", c(27, 30:34)))
+    # is_pythons <- is_python_vec(python_cmds)
+    python_cmd <- NA
+    for(cmd in python_cmds) {
+        if(is_python(cmd)) {
+            python_cmd <- cmd
+        }
+    }
+    # python_cmd <- python_cmds[which(is_pythons)][1]
     if(is.na(python_cmd)) {
         stop(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
                        "nor in a couple common Windows locations.\n",
                        "Please either install Python, add it to the PATH, and/or set",
-                        "the ``python_cmd`` option to the path of its current location"))
+                        "the ``python_cmd`` option to the path of its current location",
+                        "Please see the INSTALL file for more information"))
 
     }
     return(python_cmd)
