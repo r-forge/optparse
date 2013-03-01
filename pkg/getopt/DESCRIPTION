@@ -1,7 +1,7 @@
 Package: getopt
 Type: Package
 Title: C-like getopt behavior.
-Version: 1.19.0
+Version: 1.19.1
 Author: Allen Day
     Contributions from Trevor L Davis
 Maintainer: Trevor L Davis <trevor.l.davis@stanford.edu>
