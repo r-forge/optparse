@@ -262,7 +262,8 @@ print_help <- function(object) {
 #'     A big thanks to Steve Lianoglou for a bug report and patch;
 #'     Juan Carlos \enc{Borrás}{Borras} for a bug report; 
 #'     Jim Nikelski for a bug report and patch; 
-#'     Ino de Brujin and Benjamin Tyner for a bug report.
+#'     Ino de Brujin and Benjamin Tyner for a bug report;
+#'     Jonas Zimmermann for bug report; Miroslav Posta for bug report.
 #' @author Trevor Davis.
 #'
 #' @seealso \code{\link{OptionParser}} \code{\link{print_help}}
@@ -396,7 +397,7 @@ parse_args <- function(object, args = commandArgs(trailingOnly = TRUE),
         last_flag <- tail(.expand_short_option(argument), 1)
         for (ii in seq(along = object@options)) {
             option <- object@options[[ii]]
-            if(option@short_flag == last_flag)
+            if(!is.na(option@short_flag) && option@short_flag == last_flag)
                 return(option@action == "store") 
         }
     }

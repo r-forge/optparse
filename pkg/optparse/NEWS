@@ -1,3 +1,8 @@
+optparse 1.0.2
+==============
+* Fix bug in ``parse_args`` when we have options with no short flag and positional_arguments=TRUE.
+  Thanks Miroslav Posta for bug report.
+
 optparse 1.0.0
 ==============
 * Added `description` and `epilogue` arguments to `OptionParser` to allow
@@ -8,4 +13,6 @@ optparse 1.0.0
 * Now requires package getopt (>= 1.19) which has also been moved to 
   Imports field from Depends field in DESCRIPTION
 * Now also Suggests stringr package in DESCRIPTION
+
+
 

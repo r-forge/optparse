@@ -128,6 +128,15 @@ test_that("test bug when long flag option with '=' with positional_arguments = T
                             args=character(0))))
 })
 
+# Bug found by Miroslav Posta
+optlist = list(make_option(c("--tmin"), type="numeric", help="Startup time [sec]. "))
+parser = OptionParser(option_list=optlist, usage="", epilogue="")
+test_that("test bug with a NA short flag option with positional_arguments = TRUE", {
+    expect_equal(sort_list(parse_args(args=c("-h", "foo"), parser, positional_arguments=TRUE, 
+                                      print_help_and_exit=FALSE)),
+                sort_list(list(options = list(help=TRUE), args="foo")))
+})
+
 context("print_help")
 test_that("description and epilogue work as expected", {
     parser <- OptionParser()
