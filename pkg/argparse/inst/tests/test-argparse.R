@@ -45,6 +45,15 @@ test_that("add_argument works as expected", {
     expect_equal(arguments$integers, c(1,2))
     expect_equal(f(arguments$integers), 3)
     expect_error(parser$add_argument("--foo", type="boolean"))
+
+    # Bug found by Martin Diehl
+    parser$add_argument('--label',type='character',nargs=2,
+        dest='label',action='store',default=c("a","b"),help='label for X and Y axis')
+    parser$add_argument('--bool',type='logical',nargs=2,
+        dest='bool',action='store',default=c(FALSE, TRUE))
+    arguments <- parser$parse_args(c("--sum", "1", "2"))
+    expect_equal(arguments$label, c("a", "b"))
+    expect_equal(arguments$bool, c(FALSE, TRUE))
 })
 
 context("ArgumentParser")
@@ -57,3 +66,10 @@ test_that("ArgumentParser works as expected", {
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
     expect_error(ArgumentParser(python_cmd="foobar"))
 })
+
+# vector default
+# rvector_to_pylist
+# booleans
+# numeric
+# character
+

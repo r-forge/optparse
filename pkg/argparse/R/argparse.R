@@ -16,6 +16,8 @@
 #'    
 #' @references Python's \code{argparse} library, which this package is based on,
 #'  is described here: \url{http://docs.python.org/library/argparse.html}
+#' @section Acknowledgement: 
+#'     A big thanks to Martin Diehl for a bug report.
 #'      
 #' @import rjson
 #' @import proto
@@ -136,6 +138,9 @@ convert_..._to_arguments <- function(mode, ...) {
         default <- argument_list[[ii]]
         if(is.character(default)) default <- shQuote(default, type="sh") 
         if(is.logical(default)) default <- ifelse(default, 'True', 'False') 
+        if(length(default) > 1) {
+            default <- sprintf("[%s]", paste(default, collapse=", "))
+        }
         proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
     }
     # Set right default prog name if not specified, if possible
