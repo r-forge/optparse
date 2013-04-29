@@ -149,4 +149,11 @@ test_that("description and epilogue work as expected", {
     expect_equal(stringr::str_count(
                 capture.output(print_help(OptionParser("usage: foo bar")))[1],
                 "[Uu]sage"), 1)
+
+    # bug / feature request by Miroslav Posta
+    parser = OptionParser(usage="test %prog test %prog", epilog="epilog test %prog %prog", 
+                description="description %prog test %prog", prog="unit_test.r")
+    expect_output(print_help(parser), 'Usage:.*unit_test.r.*unit_test.r')
+    expect_output(print_help(parser), 'description unit_test.r test unit_test.r')
+    expect_output(print_help(parser), 'epilog test unit_test.r unit_test.r')
 })

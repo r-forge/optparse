@@ -43,7 +43,7 @@
   patch; Juan Carlos \enc{Borrás}{Borras} for a bug report;
   Jim Nikelski for a bug report and patch; Ino de Brujin
   and Benjamin Tyner for a bug report; Jonas Zimmermann for
-  bug report; Miroslav Posta for bug report.
+  bug report; Miroslav Posta for bug reports.
 }
 \examples{
 # example from vignette

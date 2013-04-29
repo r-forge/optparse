@@ -24,9 +24,10 @@
   instance.}
 
   \item{prog}{Program name to be substituted for
-  \code{\%prog} in the usage message, the default is to use
-  the actual Rscript file name if called by an Rscript file
-  and otherwise keep \code{\%prog}.}
+  \code{\%prog} in the usage message (including description
+  and epilogue if present), the default is to use the
+  actual Rscript file name if called by an Rscript file and
+  otherwise keep \code{\%prog}.}
 
   \item{description}{Additional text for \code{print_help}
   to print out between usage statement and options

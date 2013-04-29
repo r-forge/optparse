@@ -34,7 +34,8 @@ setClass("OptionParserOption", representation(short_flag="character",
 #' @param add_help_option Whether a standard help option should be automatically
 #'     added to the \code{OptionParser} instance.
 #' @param prog Program name to be substituted for \code{\%prog} in the usage
-#'     message, the default is to use the actual Rscript file name if called by an
+#'     message (including description and epilogue if present),
+#'     the default is to use the actual Rscript file name if called by an
 #'     Rscript file and otherwise keep \code{\%prog}.
 #' @param description  Additional text for \code{print_help} to print out between
 #'     usage statement and options statement
@@ -57,7 +58,9 @@ OptionParser <- function(usage = "usage: %prog [options]", option_list=list(),
         prog <- get_Rscript_filename()
     }
     if(length(prog) && !is.na(prog)) {
-        usage <- sub("%prog", prog, usage)
+        usage <- gsub("%prog", prog, usage)
+        description <- gsub("%prog", prog, description)
+        epilogue <- gsub("%prog", prog, epilogue)
     }
     # Match behavior of usage string in Python optparse package
     usage <- sub("^usage: ", "Usage: ", usage)
@@ -263,7 +266,7 @@ print_help <- function(object) {
 #'     Juan Carlos \enc{Borrás}{Borras} for a bug report; 
 #'     Jim Nikelski for a bug report and patch; 
 #'     Ino de Brujin and Benjamin Tyner for a bug report;
-#'     Jonas Zimmermann for bug report; Miroslav Posta for bug report.
+#'     Jonas Zimmermann for bug report; Miroslav Posta for bug reports.
 #' @author Trevor Davis.
 #'
 #' @seealso \code{\link{OptionParser}} \code{\link{print_help}}
